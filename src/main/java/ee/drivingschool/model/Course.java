@@ -13,7 +13,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String courseName;
 
@@ -42,7 +42,7 @@ public class Course {
         return updatedAt;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -92,5 +92,20 @@ public class Course {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", courseName='" + courseName + '\'' +
+                ", category='" + category + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", teacher=" + teacher +
+                ", students=" + students +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
