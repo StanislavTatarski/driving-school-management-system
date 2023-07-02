@@ -1,5 +1,7 @@
 package ee.drivingschool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,6 +21,7 @@ public class Teacher {
     private String phone;
     private String address;
     private String email;
+    @JsonIgnore
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private List<Course> courses;
     @CreationTimestamp

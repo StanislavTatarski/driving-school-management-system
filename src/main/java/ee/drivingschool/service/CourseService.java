@@ -1,7 +1,10 @@
 package ee.drivingschool.service;
 
+import ee.drivingschool.model.Course;
 import ee.drivingschool.repository.CourseRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CourseService {
@@ -10,5 +13,9 @@ public class CourseService {
 
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
+    }
+
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
     }
 }

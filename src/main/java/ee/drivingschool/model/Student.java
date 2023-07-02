@@ -1,5 +1,7 @@
 package ee.drivingschool.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,6 +25,8 @@ public class Student {
     private String address;
 
     private String email;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
@@ -111,7 +115,7 @@ public class Student {
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
-                ", course=" + course +
+//                ", course=" + course +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
