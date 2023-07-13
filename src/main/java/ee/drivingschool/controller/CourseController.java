@@ -1,7 +1,8 @@
 package ee.drivingschool.controller;
 
-import ee.drivingschool.model.Course;
+import ee.drivingschool.dto.CourseDto;
 import ee.drivingschool.service.CourseService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,10 @@ public class CourseController {
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
+
     @GetMapping(path = "/course")
-    public List<Course> getCourse() {
-        return courseService.getAllCourses();
+    public ResponseEntity<List<CourseDto>> getCourse() {
+        List<CourseDto> courses = courseService.getAllCourses();
+        return ResponseEntity.ok(courses);
     }
 }

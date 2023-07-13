@@ -62,46 +62,46 @@ public class DrivingschoolApplication implements CommandLineRunner {
 //		System.out.println("New course created successfully" + course1 + course2);
 //		System.out.println("New teacher created successfully" + teacher1 + teacher2);
 //		System.out.println("New student created successfully" + student1 + student2);
+
+//		Teacher teacher = teacherRepository.findTeacherById(21L).get(0);
+//		System.out.println("Teacher1:" + teacher);
+	}
+
+
+
+	private Course createCourse(Teacher teacher, String name, String category, LocalDate startDate, LocalDate endDate) {
+
+		Course course = new Course();
+		course.setCourseName(name);
+		course.setCategory(category);
+		course.setStartDate(startDate);
+		course.setEndDate(endDate);
+		course.setTeacher(teacher);
+		return courseRepository.save(course);
+	}
+	private Teacher createTeacher(String firstName, String lastName, String phone, String address,
+										String email) {
+
+		Teacher teacher = new Teacher();
+		teacher.setFirstName(firstName);
+		teacher.setLastName(lastName);
+		teacher.setPhone(phone);
+		teacher.setAddress(address);
+		teacher.setEmail(email);
+		return teacherRepository.save(teacher);
+	}
+
+	private Student createStudent(Course course, String firstName, String lastName, String idCode,
+								  String phone, String address, String email) {
+		Student student = new Student();
+		student.setFirstName(firstName);
+		student.setLastName(lastName);
+		student.setIdCode(idCode);
+		student.setPhone(phone);
+		student.setAddress(address);
+		student.setEmail(email);
+		student.setCourse(course);
+		return studentRepository.save(student);
 //
-////		Teacher teacher = teacherRepository.findTeacherById(21L).get(0);
-////		System.out.println("Teacher1:" + teacher);
-//	}
-//
-//
-//
-//	private Course createCourse(Teacher teacher, String name, String category, LocalDate startDate, LocalDate endDate) {
-//
-//		Course course = new Course();
-//		course.setCourseName(name);
-//		course.setCategory(category);
-//		course.setStartDate(startDate);
-//		course.setEndDate(endDate);
-//		course.setTeacher(teacher);
-//		return courseRepository.save(course);
-//	}
-//	private Teacher createTeacher(String firstName, String lastName, String phone, String address,
-//										String email) {
-//
-//		Teacher teacher = new Teacher();
-//		teacher.setFirstName(firstName);
-//		teacher.setLastName(lastName);
-//		teacher.setPhone(phone);
-//		teacher.setAddress(address);
-//		teacher.setEmail(email);
-//		return teacherRepository.save(teacher);
-//	}
-//
-//	private Student createStudent(Course course, String firstName, String lastName, String idCode,
-//								  String phone, String address, String email) {
-//		Student student = new Student();
-//		student.setFirstName(firstName);
-//		student.setLastName(lastName);
-//		student.setIdCode(idCode);
-//		student.setPhone(phone);
-//		student.setAddress(address);
-//		student.setEmail(email);
-//		student.setCourse(course);
-//		return studentRepository.save(student);
-////
 	}
 }

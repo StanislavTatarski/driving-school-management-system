@@ -5,10 +5,7 @@ import ee.drivingschool.dto.TeacherResponseDto;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.service.TeacherService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,10 @@ public class TeacherController {
         TeacherResponseDto savedTeacher = teacherService.save(teacherCreationRequestDto);
 
         return ResponseEntity.ok(savedTeacher);
+    }
+    @DeleteMapping(path = "/teacher/{id}")
+    public ResponseEntity deleteTeacher(@PathVariable("id") Long id) {
+        teacherService.removeTeacher(id);
+        return ResponseEntity.ok().build();
     }
 }

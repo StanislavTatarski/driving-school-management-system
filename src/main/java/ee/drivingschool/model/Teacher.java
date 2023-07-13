@@ -107,4 +107,8 @@ public class Teacher {
                 ", updatedAt=" + updatedAt +
                 '}';
     }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

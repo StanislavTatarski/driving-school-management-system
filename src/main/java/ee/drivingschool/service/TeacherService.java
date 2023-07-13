@@ -38,7 +38,7 @@ public class TeacherService {
         teacher.setEmail(teacherCreationRequestDto.getEmail());
         return teacherRepository.save(teacher);
     }
-    private static TeacherResponseDto toTeacherResponseDto(Teacher savedTeacher) {
+    private TeacherResponseDto toTeacherResponseDto(Teacher savedTeacher) {
 
         TeacherResponseDto teacherResponseDto = new TeacherResponseDto();
         teacherResponseDto.setFirstName(savedTeacher.getFirstName());
@@ -47,5 +47,10 @@ public class TeacherService {
         teacherResponseDto.setAddress(savedTeacher.getAddress());
         teacherResponseDto.setEmail(savedTeacher.getEmail());
         return teacherResponseDto;
+    }
+
+
+    public void removeTeacher(Long id) {
+        teacherRepository.deleteById(id);
     }
 }
