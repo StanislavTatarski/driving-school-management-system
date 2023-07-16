@@ -1,6 +1,7 @@
 package ee.drivingschool.controller;
 
 import ee.drivingschool.dto.CourseDto;
+import ee.drivingschool.dto.StudentDto;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.StudentService;
 import ee.drivingschool.service.TeacherService;
@@ -27,5 +28,11 @@ public class AdminController {
         List<CourseDto> courseList = courseService.getAllCourses();
         modelMap.addAttribute("coursesList", courseList);
         return "index";
+    }
+    @GetMapping("/admin/students")
+    public String getAllStudents(final ModelMap modelMap) {
+        List<StudentDto> studentList = studentService.getAllStudents();
+        modelMap.addAttribute("studentsList", studentList);
+        return "admin-students";
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.Instant;
 
 @Entity
@@ -13,15 +14,10 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
-
     private String lastName;
-
     private String idCode;
-
     private String phone;
-
     private String address;
-
     private String email;
 
     @JsonIgnore

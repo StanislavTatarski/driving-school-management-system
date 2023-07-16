@@ -25,6 +25,7 @@ public class CourseService {
     public Course course(Course course) {
         return courseRepository.save(course);
     }
+
     private List<CourseDto> toCourseDto(List<Course> courses) {
 
         List<CourseDto> courseDtoList = new ArrayList<>();
