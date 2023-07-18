@@ -22,6 +22,7 @@ public class TeacherController {
     public List<Teacher> getTeachers() {
         return teacherService.getAllTeachers();
     }
+
     @PostMapping(path = "/teacher")
     public ResponseEntity<TeacherResponseDto> createTeacher(@RequestBody TeacherCreationRequestDto teacherCreationRequestDto) {
 

@@ -1,11 +1,15 @@
 package ee.drivingschool.service;
 
+import ee.drivingschool.dto.CourseDto;
 import ee.drivingschool.dto.TeacherCreationRequestDto;
+import ee.drivingschool.dto.TeacherDto;
 import ee.drivingschool.dto.TeacherResponseDto;
+import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.TeacherRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,5 +56,22 @@ public class TeacherService {
 
     public void removeTeacher(Long id) {
         teacherRepository.deleteById(id);
+    }
+
+    public List<TeacherDto> getAllTeachersDto() {
+        List<TeacherDto> teacherDtos = new ArrayList<>();
+
+        for(Teacher teacher : teacherRepository.findAll()) {
+            teacherDtos.add(toTeacherDto(teacher));
+        }
+        return teacherDtos;
+    }
+
+    private TeacherDto toTeacherDto(Teacher teacher) {
+        TeacherDto teacherDto = new TeacherDto();
+        teacherDto.setId(teacher.getId());
+        teacherDto.setFirstName(teacher.getFirstName());
+        teacherDto.setLastName(teacher.getLastName());
+        return teacherDto;
     }
 }
