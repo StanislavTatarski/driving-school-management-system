@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 public class Student {
@@ -24,6 +25,11 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "driving_card_id")
+    private List<DrivingCard> drivingCardList;
 
     @CreationTimestamp
     private Instant createdAt;

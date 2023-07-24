@@ -1,8 +1,6 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.CourseCreationRequestDto;
-import ee.drivingschool.dto.CourseDto;
-import ee.drivingschool.dto.CourseResponseDto;
+import ee.drivingschool.dto.*;
 import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
@@ -34,7 +32,7 @@ public class CourseService {
 
         List<CourseDto> courseDtoList = new ArrayList<>();
 
-        for(Course course : courses) {
+        for (Course course : courses) {
             courseDtoList.add(toCourseDto(course));
         }
         return courseDtoList;
@@ -63,7 +61,7 @@ public class CourseService {
         courseDto.setCategory(course.getCategory());
         courseDto.setStartDate(course.getStartDate());
         courseDto.setEndDate(course.getEndDate());
-        if(teacher != null) {
+        if (teacher != null) {
             courseDto.setTeacherName(teacher.getFullName());
         }
         return courseDto;
@@ -80,6 +78,7 @@ public class CourseService {
                 .build();
         return course;
     }
+
     private CourseResponseDto toCourseResponseDto(Course savedCourse) {
 
         CourseResponseDto courseResponseDto = new CourseResponseDto();
@@ -92,5 +91,46 @@ public class CourseService {
 
     }
 
+    public Course findCourseById(Long id) throws RuntimeException {
 
+        return courseRepository.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
+    }
+
+    private CourseEditDto toCourseEditDto(Course course) {
+
+        Teacher teacher = course.getTeacher();
+
+        CourseEditDto courseEditDto = new CourseEditDto();
+        courseEditDto.setId(course.getId());
+        courseEditDto.setCourseName(course.getCourseName());
+        courseEditDto.setCategory(course.getCategory());
+        courseEditDto.setStartDate(course.getStartDate());
+        courseEditDto.setEndDate(course.getEndDate());
+        if (teacher != null) {
+            courseEditDto.setTeacherId(teacher.getId());
+            courseEditDto.setTeacherName(teacher.getFullName());
+        }
+        return courseEditDto;
+    }
+
+    public CourseEditDto getCourseEditDtoById(Long id) {
+
+        Course course = findCourseById(id);
+
+        return toCourseEditDto(course);
+
+    }
+
+    public void edit(Long id, CourseEditRequestDto courseEditRequestDto) {
+
+        Teacher teacher = teacherRepository.getReferenceById(courseEditRequestDto.getTeacherId());
+        Course course = findCourseById(id);
+        course.setCourseName(courseEditRequestDto.getCourseName());
+        course.setCategory(courseEditRequestDto.getCategory());
+        course.setStartDate(courseEditRequestDto.getStartDate());
+        course.setEndDate(courseEditRequestDto.getEndDate());
+        course.setTeacher(teacher);
+
+        courseRepository.save(course);
+    }
 }
