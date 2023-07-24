@@ -16,7 +16,7 @@
 
 <div class="container">
     </br></br>
-    <form action="/admin/course" method="post" th:object="${course}">
+    <form th:action="@{/admin/course/{id}(id=${course.id})}" method="post" th:object="${course}">
 
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -52,7 +52,7 @@
                     <option value="">Select teacher</option>
                     <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.fullName}"></option>
                 </select>
-<!--                <input type="text" class="form-control" id="teacher" name="teacher" th:field="*{teacherName}">-->
+                <!--                <input type="text" class="form-control" id="teacher" name="teacher" th:field="*{teacherName}">-->
             </div>
         </div>
         </br>
@@ -74,10 +74,10 @@
             orientation: 'auto',
             startDate: new Date(),
         }).on('changeDate', function(e) {
-                // const futureDate = new Date(e.date);
-                // futureDate.setDate(futureDate.getDate() + 21);
-                // $('#endDate').datepicker('setDate', futureDate);
-                // console.log(futureDate);
+            const futureDate = new Date(e.date);
+            futureDate.setDate(futureDate.getDate() + 21);
+            $('#endDate').datepicker('setDate', futureDate);
+            console.log(futureDate);
         });
         $('#endDate').datepicker({
             format: 'dd.mm.yyyy',

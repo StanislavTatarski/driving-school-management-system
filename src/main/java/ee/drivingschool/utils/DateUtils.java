@@ -10,4 +10,7 @@ public class DateUtils {
     public static LocalDate convertDate(String date) {
         return LocalDate.parse(date, formatter);
     }
+    public static String convertLocalDateToString(LocalDate date) {
+        return date.format(formatter);
+    }
 }

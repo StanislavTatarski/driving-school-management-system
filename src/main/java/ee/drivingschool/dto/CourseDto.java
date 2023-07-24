@@ -1,5 +1,6 @@
 package ee.drivingschool.dto;
 
+import ee.drivingschool.utils.DateUtils;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,4 +16,12 @@ public class CourseDto {
     private Long teacherId;
     private String teacherName;
 
+//    public String getStartDate() {
+//        return DateUtils.convertLocalDateToString(startDate);
+//    }
+//
+//    public String getEndDate() {
+//        return DateUtils.convertLocalDateToString(endDate);
+//    }
+    // TODO: fix this code later
 }
