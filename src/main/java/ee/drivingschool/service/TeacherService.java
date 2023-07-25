@@ -21,8 +21,18 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-    public List<Teacher> getAllTeachers() {
-        return teacherRepository.findAll();
+    public List<TeacherDto> getAllTeachers() {
+        List<Teacher> teachers = teacherRepository.findAll();
+        return toTeacherDtoList(teachers);
+    }
+
+    private List<TeacherDto> toTeacherDtoList(List<Teacher> teachers) {
+        List<TeacherDto> teacherDtoList = new ArrayList<>();
+
+        for (Teacher teacher : teachers) {
+            teacherDtoList.add(toTeacherDto2(teacher));
+        }
+        return teacherDtoList;
     }
 
     public TeacherResponseDto save(TeacherCreationRequestDto teacherCreationRequestDto) {
@@ -30,7 +40,6 @@ public class TeacherService {
         Teacher savedTeacher = toTeacher(teacherCreationRequestDto);
         return toTeacherResponseDto(savedTeacher);
 
-//        return teacherResponseDto;
     }
 
     private Teacher toTeacher(TeacherCreationRequestDto teacherCreationRequestDto) {
@@ -66,6 +75,16 @@ public class TeacherService {
         }
         return teacherDtos;
     }
+    private TeacherDto toTeacherDto2(Teacher teacher) {
+        TeacherDto teacherDto = new TeacherDto();
+        teacherDto.setId(teacher.getId());
+        teacherDto.setFirstName(teacher.getFirstName());
+        teacherDto.setLastName(teacher.getLastName());
+        teacherDto.setPhone(teacher.getPhone());
+        teacherDto.setAddress(teacher.getAddress());
+        teacherDto.setEmail(teacher.getEmail());
+        return teacherDto;
+    }
 
     private TeacherDto toTeacherDto(Teacher teacher) {
         TeacherDto teacherDto = new TeacherDto();
@@ -74,4 +93,6 @@ public class TeacherService {
         teacherDto.setLastName(teacher.getLastName());
         return teacherDto;
     }
+
+
 }
