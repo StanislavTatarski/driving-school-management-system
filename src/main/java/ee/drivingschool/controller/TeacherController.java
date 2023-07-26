@@ -18,10 +18,10 @@ public class TeacherController {
         this.teacherService = teacherService;
     }
 
-    @GetMapping(path = "/teacher")
-    public List<Teacher> getTeachers() {
-        return teacherService.getAllTeachers();
-    }
+//    @GetMapping(path = "/teacher")
+//    public List<Teacher> getTeachers() {
+//        return teacherService.getAllTeachers();
+//    }
 
     @PostMapping(path = "/teacher")
     public ResponseEntity<TeacherResponseDto> createTeacher(@RequestBody TeacherCreationRequestDto teacherCreationRequestDto) {
