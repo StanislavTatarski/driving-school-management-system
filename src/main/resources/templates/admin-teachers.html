@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.js"></script>
+  <link href="/sidebars.css" rel="stylesheet">
+  <title>Teachers</title>
+</head>
+
+<body>
+<h1>Teachers</h1>
+<table class="table">
+  <thead>
+  <th>ID</th>
+  <th>First name</th>
+  <th>Last name</th>
+  <th>Phone</th>
+  <th>Address</th>
+  <th>Email</th>
+  </thead>
+
+  <tbody>
+  <tr th:each="teacher : ${teachersList}">
+    <td th:text="${teacher.id}"></td>
+    <td th:text="${teacher.firstName}"></td>
+    <td th:text="${teacher.lastName}"></td>
+    <td th:text="${teacher.phone}"></td>
+    <td th:text="${teacher.address}"></td>
+    <td th:text="${teacher.email}"></td>
+  </tr>
+  </tbody>
+</table>
+
+
+</body>
+</html>
