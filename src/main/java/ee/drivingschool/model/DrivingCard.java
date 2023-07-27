@@ -13,13 +13,14 @@ import java.time.Instant;
 public class DrivingCard {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "teacher_id")
