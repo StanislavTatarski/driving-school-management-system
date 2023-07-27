@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/admin/course")
 public class AdminCourseController {
     private final CourseService courseService;
     private final TeacherService teacherService;
