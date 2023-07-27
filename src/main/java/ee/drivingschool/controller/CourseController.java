@@ -21,11 +21,11 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping(path = "/course")
-    public ResponseEntity<List<CourseDto>> getCourse() {
-        List<CourseDto> courses = courseService.getAllCourses();
-        return ResponseEntity.ok(courses);
-    }
+//    @GetMapping(path = "/course")
+//    public ResponseEntity<List<CourseDto>> getCourse() {
+//        List<CourseDto> courses = courseService.getAllCourses();
+//        return ResponseEntity.ok(courses);
+//    }
 //    @PostMapping(path = "/course")
 //    public ResponseEntity<CourseResponseDto> createCourse(@RequestBody CourseCreationRequestDto courseCreationRequestDto) {
 //        CourseResponseDto savedCourse = courseService.save(courseCreationRequestDto);

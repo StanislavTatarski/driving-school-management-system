@@ -1,5 +1,6 @@
 package ee.drivingschool.dto;
 
+import ee.drivingschool.model.Status;
 import ee.drivingschool.utils.DateUtils;
 import lombok.*;
 
@@ -15,6 +16,7 @@ public class CourseDto {
     private LocalDate endDate;
     private Long teacherId;
     private String teacherName;
+    private Status status;
 
 //    public String getStartDate() {
 //        return DateUtils.convertLocalDateToString(startDate);

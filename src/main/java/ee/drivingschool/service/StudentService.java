@@ -1,5 +1,6 @@
 package ee.drivingschool.service;
 
+import ee.drivingschool.dto.StudentCreationRequestDto;
 import ee.drivingschool.dto.StudentDto;
 import ee.drivingschool.model.Student;
 import ee.drivingschool.repository.StudentRepository;
@@ -43,5 +44,26 @@ public class StudentService {
         studentDto.setAddress(student.getAddress());
         studentDto.setCourseName(student.getCourse().getCourseName());
         return studentDto;
+    }
+
+    public StudentDto save(StudentCreationRequestDto studentCreationRequestDto) {
+
+        Student student = toStudent(studentCreationRequestDto);
+
+        Student savedStudent = studentRepository.save(student);
+
+        return toStudentDto(savedStudent);
+    }
+
+    private Student toStudent(StudentCreationRequestDto studentCreationRequestDto) {
+
+        Student student = new Student();
+        student.setFirstName(studentCreationRequestDto.getFirstName());
+        student.setLastName(studentCreationRequestDto.getLastName());
+        student.setIdCode(studentCreationRequestDto.getIdCode());
+        student.setPhone(studentCreationRequestDto.getPhone());
+        student.setEmail(studentCreationRequestDto.getEmail());
+        student.setAddress(studentCreationRequestDto.getAddress());
+        return student;
     }
 }

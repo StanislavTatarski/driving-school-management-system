@@ -2,9 +2,7 @@ package ee.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,10 +10,11 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Builder
+@Entity
 public class Course {
 
     @Id
@@ -29,6 +28,10 @@ public class Course {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "teacher_id")
@@ -43,17 +46,12 @@ public class Course {
     @UpdateTimestamp
     private Instant updatedAt;
 
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCourseName() {
@@ -88,6 +86,14 @@ public class Course {
         this.endDate = endDate;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public Teacher getTeacher() {
         return teacher;
     }
@@ -104,6 +110,22 @@ public class Course {
         this.students = students;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -112,6 +134,7 @@ public class Course {
                 ", category='" + category + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", status=" + status +
                 ", teacher=" + teacher +
                 ", students=" + students +
                 ", createdAt=" + createdAt +

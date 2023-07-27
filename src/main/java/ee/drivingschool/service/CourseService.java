@@ -5,6 +5,7 @@ import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.TeacherRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
