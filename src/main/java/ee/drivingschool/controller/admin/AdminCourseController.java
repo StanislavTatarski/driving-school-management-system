@@ -2,15 +2,13 @@ package ee.drivingschool.controller.admin;
 
 import ee.drivingschool.dto.*;
 import ee.drivingschool.model.Course;
+import ee.drivingschool.model.Status;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,7 @@ public class AdminCourseController {
         this.courseService = courseService;
         this.teacherService = teacherService;
     }
+
     @GetMapping("/")
     public String getCourses(final ModelMap modelMap) {
         List<CourseDto> courseList = courseService.getAllCourses();
@@ -31,7 +30,7 @@ public class AdminCourseController {
     }
 
     // ---------------------- CREATE NEW COURSE ----------------------
-    @GetMapping("/admin/course/create")
+    @GetMapping("/create")
     public String showCreateCourseForm(ModelMap modelMap) {
         CourseDto courseDto = new CourseDto();
         List<TeacherDto> teachers = teacherService.getAllTeachersDto();
@@ -39,6 +38,7 @@ public class AdminCourseController {
         modelMap.addAttribute("course", courseDto);
         return "create-course";
     }
+
     @PostMapping("/admin/course")
     public String createCourse(@ModelAttribute("course") CourseCreationRequestDto courseCreationRequestDto) {
         courseService.save(courseCreationRequestDto);
@@ -48,18 +48,17 @@ public class AdminCourseController {
     //---------------------- EDIT COURSE ----------------------
     @GetMapping("/admin/course/{id}")
     public String showEditCourseForm(@PathVariable("id") Long id, ModelMap modelMap) {
-
         CourseEditDto courseEditDto = courseService.getCourseEditDtoById(id);
         List<TeacherDto> teachers = teacherService.getAllTeachersDto();
         modelMap.addAttribute("teachers", teachers);
         modelMap.addAttribute("course", courseEditDto);
+        modelMap.addAttribute("statuses", Status.values());
         return "edit-course";
     }
+
     @PostMapping("/admin/course/{id}")
     public String editCourse(@PathVariable("id") Long id, @ModelAttribute("course") CourseEditRequestDto courseEditRequestDto) {
         courseService.edit(id, courseEditRequestDto);
         return "redirect:/";
     }
-
-
 }

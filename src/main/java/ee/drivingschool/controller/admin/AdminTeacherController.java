@@ -2,7 +2,6 @@ package ee.drivingschool.controller.admin;
 
 import ee.drivingschool.dto.TeacherCreationRequestDto;
 import ee.drivingschool.dto.TeacherDto;
-import ee.drivingschool.model.Teacher;
 import ee.drivingschool.service.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
