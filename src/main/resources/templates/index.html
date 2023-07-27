@@ -194,7 +194,13 @@
     </div>
     </br>
 
-    <table class="table">
+<!--      .table {-->
+<!--      height: 300px;-->
+<!--      overflow: auto;-->
+<!--      }-->
+
+
+      <table class="table">
       <thead>
       <th>ID</th>
       <th>Course name</th>
@@ -256,11 +262,23 @@
 
 
 
+    <div>
+      <button onclick="goToPreviousPage()">Previous</button>
+      <span>Page ${currentPage} of ${Math.ceil(tableData.length / rowsPerPage)}</span>
+      <button onclick="goToNextPage()">Next</button>
+    </div>
 
 
 
   </div>
 </main>
 <script src="/sidebars.js"></script>
+
+<style>
+  .table {
+    max-height: 100px; /* Adjust this value to your desired height */
+    overflow-y: auto;
+  }
+</style>
 </body>
 </html>
