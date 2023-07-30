@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.js"></script>
+    <link href="/sidebars.css" rel="stylesheet">
+    <title>Edit student</title>
+</head>
+<body>
+
+<h1>Edit student</h1>
+
+<div class="container">
+    </br></br>
+    <form th:action="@{/admin/student/{id}(id=${student.id})}" method="post" th:object="${student}">
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <label for="firstName">First name</label>
+                <input type="text" class="form-control" id="firstName" name="firsName" th:field="*{firstName}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <label for="lastName">Last name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" th:field="*{lastName}">
+                <small id="emailHelp" class="form-text text-muted">Please enter new course</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <label for="idCode">IdCode</label>
+                <input type="text" class="form-control" id="idCode" name="idCode" th:field="*{idCode}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" name="phone" th:field="*{phone}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" th:field="*{email}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" name="address" th:field="*{address}">
+            </div>
+        </div>
+       <!-- <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <label for="teacher">Course</label>
+                <select id="teacher" class="form-select" aria-label="Select a teacher" th:field="*{teacherId}">
+                    <option value="">Select course</option>
+                    <option th:each="course : ${courses}" th:value="${teacher.id}" th:text="${teacher.fullName}"></option>
+                </select>
+            </div>
+        </div>-->
+
+        </br>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

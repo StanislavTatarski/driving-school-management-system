@@ -1,6 +1,7 @@
 package ee.drivingschool.controller.admin;
 
 import ee.drivingschool.dto.*;
+import ee.drivingschool.exception.CourseNotFoundException;
 import ee.drivingschool.model.Status;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.TeacherService;
@@ -44,7 +45,7 @@ public class AdminCourseController {
 
     //---------------------- EDIT COURSE ----------------------
     @GetMapping("/admin/course/{id}")
-    public String showEditCourseForm(@PathVariable("id") Long id, ModelMap modelMap) {
+    public String showEditCourseForm(@PathVariable("id") Long id, ModelMap modelMap) throws CourseNotFoundException {
         CourseEditDto courseEditDto = courseService.getCourseEditDtoById(id);
         List<TeacherDto> teachers = teacherService.getAllTeachersDto();
         modelMap.addAttribute("teachers", teachers);
@@ -54,7 +55,7 @@ public class AdminCourseController {
     }
 
     @PostMapping("/admin/course/{id}")
-    public String editCourse(@PathVariable("id") Long id, @ModelAttribute("course") CourseEditRequestDto courseEditRequestDto) {
+    public String editCourse(@PathVariable("id") Long id, @ModelAttribute("course") CourseEditRequestDto courseEditRequestDto) throws CourseNotFoundException {
         courseService.edit(id, courseEditRequestDto);
         return "redirect:/";
     }
