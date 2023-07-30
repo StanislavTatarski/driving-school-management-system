@@ -62,6 +62,7 @@ public class CourseService {
         courseDto.setCategory(course.getCategory());
         courseDto.setStartDate(course.getStartDate());
         courseDto.setEndDate(course.getEndDate());
+        courseDto.setStatus(course.getStatus());
         if (teacher != null) {
             courseDto.setTeacherName(teacher.getFullName());
         }
@@ -80,18 +81,6 @@ public class CourseService {
         return course;
     }
 
-    private CourseResponseDto toCourseResponseDto(Course savedCourse) {
-
-        CourseResponseDto courseResponseDto = new CourseResponseDto();
-        courseResponseDto.setId(savedCourse.getId());
-        courseResponseDto.setCourseName(savedCourse.getCourseName());
-        courseResponseDto.setCategory(savedCourse.getCategory());
-        courseResponseDto.setStartDate(savedCourse.getStartDate());
-        courseResponseDto.setEndDate(savedCourse.getEndDate());
-        return courseResponseDto;
-
-    }
-
     public Course findCourseById(Long id) throws RuntimeException {
 
         return courseRepository.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
@@ -107,6 +96,7 @@ public class CourseService {
         courseEditDto.setCategory(course.getCategory());
         courseEditDto.setStartDate(course.getStartDate());
         courseEditDto.setEndDate(course.getEndDate());
+        courseEditDto.setStatus(course.getStatus());
         if (teacher != null) {
             courseEditDto.setTeacherId(teacher.getId());
             courseEditDto.setTeacherName(teacher.getFullName());
@@ -131,6 +121,7 @@ public class CourseService {
         course.setStartDate(courseEditRequestDto.getStartDate());
         course.setEndDate(courseEditRequestDto.getEndDate());
         course.setTeacher(teacher);
+        course.setStatus(courseEditRequestDto.getStatus());
 
         courseRepository.save(course);
     }

@@ -1,15 +1,12 @@
 package ee.drivingschool.controller.admin;
 
 import ee.drivingschool.dto.*;
-import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Status;
-import ee.drivingschool.model.Teacher;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller

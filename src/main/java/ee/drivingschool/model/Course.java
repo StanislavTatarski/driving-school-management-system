@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -29,8 +31,10 @@ public class Course {
 
     private LocalDate endDate;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
     private Status status;
+
 
     @JsonIgnore
     @ManyToOne
@@ -41,9 +45,10 @@ public class Course {
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Student> students;
 
-    @CreationTimestamp
+    @CreatedDate
+    @Column(updatable = false)
     private Instant createdAt;
-    @UpdateTimestamp
+    @LastModifiedDate
     private Instant updatedAt;
 
     public Long getId() {

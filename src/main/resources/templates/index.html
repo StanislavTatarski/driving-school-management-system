@@ -250,6 +250,10 @@
         <!--            <span class="visually-hidden">Button</span>-->
         <!--          </button>-->
         <!--        </td>-->
+
+        <td>
+          <span th:text="${course.status}" th:classappend="${course.statusCssClass}" class="badge rounded-pill"></span>
+        </td>
       </tr>
       </tbody>
     </table>
