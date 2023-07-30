@@ -7,9 +7,12 @@ import ee.drivingschool.dto.StudentEditDto;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.StudentService;
 import ee.drivingschool.service.TeacherService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Controller
@@ -35,15 +38,20 @@ public class AdminStudentsController {
 
     // ---------------------- CREATE NEW STUDENT ----------------------
     @GetMapping("/admin/student/create")
-    public String showCreateStudentForm(ModelMap modelMap) {
-        StudentDto studentDto = new StudentDto();
-        List<CourseDto> courses = courseService.getAllCourses();
+    public String showCreateStudentForm(StudentCreationRequestDto studentDto, ModelMap modelMap) {
+        List<CourseDto> courses = courseService.getAllCoursesDto();
         modelMap.addAttribute("studentDto", studentDto);
         modelMap.addAttribute("courses", courses);
         return "create-student";
     }
     @PostMapping("admin/student/create")
-    public String createStudent(@ModelAttribute("studentDto") StudentCreationRequestDto studentCreationRequestDto) {
+    public String createStudent(@Valid @ModelAttribute("studentDto") StudentCreationRequestDto studentCreationRequestDto,
+                                BindingResult result, ModelMap modelMap) {
+        List<CourseDto> courses = courseService.getAllCoursesDto();
+        if (result.hasErrors()) {
+            modelMap.addAttribute("courses", courses);
+            return "create-student";
+        }
         studentService.save(studentCreationRequestDto);
         return "redirect:/admin/students";
     }

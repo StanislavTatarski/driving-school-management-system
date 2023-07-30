@@ -27,7 +27,7 @@ public class CourseService {
         this.teacherRepository = teacherRepository;
     }
 
-    public List<CourseDto> getAllCourses() {
+    public List<CourseDto> getAllCoursesDto() {
         List<Course> courses = courseRepository.findAll();
         return toCourseDto(courses);
     }

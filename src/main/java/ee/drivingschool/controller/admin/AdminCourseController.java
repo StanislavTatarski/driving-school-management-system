@@ -22,7 +22,7 @@ public class AdminCourseController {
 
     @GetMapping("/")
     public String getCourses(final ModelMap modelMap) {
-        List<CourseDto> courseList = courseService.getAllCourses();
+        List<CourseDto> courseList = courseService.getAllCoursesDto();
         modelMap.addAttribute("coursesList", courseList);
         return "index";
     }

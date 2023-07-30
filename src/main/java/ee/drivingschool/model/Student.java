@@ -18,6 +18,7 @@ public class Student {
     private String firstName;
     private String lastName;
     private String idCode;
+
     private String phone;
     private String address;
     private String email;
