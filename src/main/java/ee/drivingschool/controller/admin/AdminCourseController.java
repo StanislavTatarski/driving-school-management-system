@@ -23,13 +23,9 @@ public class AdminCourseController {
     }
 
     @GetMapping("/")
-    public String getCourses(final ModelMap modelMap) {
-        List<CourseDto> courseList = courseService.getAllCoursesDto();
-        modelMap.addAttribute("coursesList", courseList);
-
-        return "index";
+    public String getCourses() {
+        return "redirect:/page/1";
     }
-
 
     // ---------------------- CREATE NEW COURSE ----------------------
     @GetMapping("/create")

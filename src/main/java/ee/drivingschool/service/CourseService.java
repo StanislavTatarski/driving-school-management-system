@@ -1,9 +1,6 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.CourseCreationRequestDto;
-import ee.drivingschool.dto.CourseDto;
-import ee.drivingschool.dto.CourseEditDto;
-import ee.drivingschool.dto.CourseEditRequestDto;
+import ee.drivingschool.dto.*;
 import ee.drivingschool.exception.CourseNotFoundException;
 import ee.drivingschool.exception.Errors;
 import ee.drivingschool.model.Course;
@@ -85,18 +82,6 @@ public class CourseService {
         return course;
     }
 
-    private CourseResponseDto toCourseResponseDto(Course savedCourse) {
-
-        CourseResponseDto courseResponseDto = new CourseResponseDto();
-        courseResponseDto.setId(savedCourse.getId());
-        courseResponseDto.setCourseName(savedCourse.getCourseName());
-        courseResponseDto.setCategory(savedCourse.getCategory());
-        courseResponseDto.setStartDate(savedCourse.getStartDate());
-        courseResponseDto.setEndDate(savedCourse.getEndDate());
-        return courseResponseDto;
-
-    }
-
     public Course findCourseById(Long id) throws CourseNotFoundException {
         return courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found", Errors.COURSE_NOT_FOUND));
     }
@@ -159,14 +144,6 @@ public class CourseService {
                 courseDtoList.add(courseDto);
             }
             return courseDtoList;
-        }
-
-        private TeacherDto convertTeacherToDto(Teacher teacher) {
-            TeacherDto teacherDto = new TeacherDto();
-            teacherDto.setId(teacher.getId());
-            teacherDto.setLastName(teacher.getLastName());
-            teacherDto.setFirstName(teacher.getFirstName());
-            return teacherDto;
         }
     }
 
