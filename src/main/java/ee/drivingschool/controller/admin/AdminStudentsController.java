@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-//@RequestMapping(value = "/admin")
 public class AdminStudentsController {
 
     private final StudentService studentService;
@@ -58,7 +57,7 @@ public class AdminStudentsController {
 
     // ---------------------- EDIT STUDENT ----------------------
     @GetMapping("/admin/student/{id}")
-    public String showEditStudentForm(@PathVariable("id") Long id, ModelMap modelMap) {
+    public String showEditStudentForm(@PathVariable("id") Long id,  ModelMap modelMap) {
         StudentEditDto studentEditDto = studentService.getStudentDtoById(id);
         modelMap.addAttribute("student", studentEditDto);
         return "edit-student";
