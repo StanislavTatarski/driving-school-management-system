@@ -1,14 +1,11 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.CourseDto;
 import ee.drivingschool.dto.TeacherCreationRequestDto;
 import ee.drivingschool.dto.TeacherDto;
 import ee.drivingschool.dto.TeacherResponseDto;
-import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.TeacherRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +48,7 @@ public class TeacherService {
         teacher.setEmail(teacherCreationRequestDto.getEmail());
         return teacherRepository.save(teacher);
     }
+
     private TeacherResponseDto toTeacherResponseDto(Teacher savedTeacher) {
 
         TeacherResponseDto teacherResponseDto = new TeacherResponseDto();
@@ -62,19 +60,15 @@ public class TeacherService {
         return teacherResponseDto;
     }
 
-
-    public void removeTeacher(Long id) {
-        teacherRepository.deleteById(id);
-    }
-
     public List<TeacherDto> getAllTeachersDto() {
         List<TeacherDto> teacherDtos = new ArrayList<>();
 
-        for(Teacher teacher : teacherRepository.findAll()) {
+        for (Teacher teacher : teacherRepository.findAll()) {
             teacherDtos.add(toTeacherDto(teacher));
         }
         return teacherDtos;
     }
+
     private TeacherDto toTeacherDto2(Teacher teacher) {
         TeacherDto teacherDto = new TeacherDto();
         teacherDto.setId(teacher.getId());

@@ -18,6 +18,29 @@ public class CourseDto {
     private String teacherName;
     private Status status;
 
+    public String getStatusCssClass() {
+        if (status == null) {
+            return "";
+        }
+        switch (status) {
+            case ACTIVE -> {
+                return "text-bg-success";
+            }
+            case INACTIVE -> {
+                return "text-bg-danger";
+            }
+            case DELETED -> {
+                return "text-bg-secondary";
+            }
+            case PENDING -> {
+                return "text-bg-warning";
+            }
+            default -> {
+                return "text-bg-info";
+            }
+        }
+    }
+
 //    public String getStartDate() {
 //        return DateUtils.convertLocalDateToString(startDate);
 //    }

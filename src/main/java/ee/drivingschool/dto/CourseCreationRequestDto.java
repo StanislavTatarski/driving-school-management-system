@@ -1,5 +1,6 @@
 package ee.drivingschool.dto;
 
+import ee.drivingschool.model.Status;
 import ee.drivingschool.utils.DateUtils;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class CourseCreationRequestDto {
     private String startDate;
     private String endDate;
     private Long teacherId;
+    private Status status;
 
     public LocalDate getStartDate() {
         return DateUtils.convertDate(startDate);
