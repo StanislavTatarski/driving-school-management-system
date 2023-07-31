@@ -6,7 +6,9 @@ import ee.drivingschool.model.Status;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.TeacherService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,10 @@ public class AdminCourseController {
     public String getCourses(final ModelMap modelMap) {
         List<CourseDto> courseList = courseService.getAllCourses();
         modelMap.addAttribute("coursesList", courseList);
+
         return "index";
     }
+
 
     // ---------------------- CREATE NEW COURSE ----------------------
     @GetMapping("/create")
@@ -60,5 +64,21 @@ public class AdminCourseController {
     public String editCourse(@PathVariable("id") Long id, @ModelAttribute("course") CourseEditRequestDto courseEditRequestDto) {
         courseService.edit(id, courseEditRequestDto);
         return "redirect:/";
+    }
+
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, ModelMap modelMap) {
+        int pageSize = 5;
+
+        Page<CourseDto> page = courseService.findPaginated(pageNo, pageSize);
+        List<CourseDto> listCourses = page.getContent();
+
+
+        modelMap.addAttribute("currentPage", pageNo);
+        modelMap.addAttribute("totalPages", page.getTotalPages());
+        modelMap.addAttribute("totalItems", page.getTotalElements());
+        modelMap.addAttribute("coursesList", listCourses);
+
+        return "index";
     }
 }

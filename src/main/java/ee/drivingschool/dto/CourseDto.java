@@ -18,6 +18,9 @@ public class CourseDto {
     private String teacherName;
     private Status status;
 
+    public void setTeacher(TeacherDto convertTeacherToDto) {
+    }
+
 //    public String getStartDate() {
 //        return DateUtils.convertLocalDateToString(startDate);
 //    }

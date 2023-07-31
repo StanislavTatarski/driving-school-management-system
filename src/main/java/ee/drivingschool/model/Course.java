@@ -29,6 +29,8 @@ public class Course {
 
     private LocalDate endDate;
 
+
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -36,6 +38,7 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
@@ -141,4 +144,6 @@ public class Course {
                 ", updatedAt=" + updatedAt +
                 '}';
     }
+
+
 }
