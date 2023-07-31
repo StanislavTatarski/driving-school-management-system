@@ -2,10 +2,11 @@ package ee.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -29,10 +30,10 @@ public class Course {
 
     private LocalDate endDate;
 
-
-
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
     private Status status;
+
 
     @JsonIgnore
     @ManyToOne
@@ -44,9 +45,10 @@ public class Course {
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Student> students;
 
-    @CreationTimestamp
+    @CreatedDate
+    @Column(updatable = false)
     private Instant createdAt;
-    @UpdateTimestamp
+    @LastModifiedDate
     private Instant updatedAt;
 
     public Long getId() {

@@ -97,7 +97,7 @@
 <main>
 
   <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-    <a href="/page/1" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <svg class="bi me-2" width="40" height="32"><use xlink:href="#car-front"/></svg>
       <span class="fs-4">DrivingSchool MS</span>
     </a>
@@ -238,7 +238,9 @@
             <span class="visually-hidden">Button</span>
           </button>
         </td>
-
+        <td>
+          <span th:text="${course.status}" th:classappend="${course.statusCssClass}" class="badge rounded-pill"></span>
+        </td>
         <script>
   function openCourseEditWindow(button) {
     var row = button.parentNode.parentNode;

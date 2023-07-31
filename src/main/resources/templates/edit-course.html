@@ -60,8 +60,8 @@
         <label for="status">Status:</label>
         <select class="form-select" th:field="*{status}" id="status">
             <option th:each="statusOption : ${statuses}"
-                    th:value="${statusOption.value}"
-                    th:text="${statusOption.name()}"
+                    th:value="${statusOption}"
+                    th:text="${statusOption}"
                     >
             </option>
         </select>

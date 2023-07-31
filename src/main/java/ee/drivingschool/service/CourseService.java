@@ -1,6 +1,11 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.*;
+import ee.drivingschool.dto.CourseCreationRequestDto;
+import ee.drivingschool.dto.CourseDto;
+import ee.drivingschool.dto.CourseEditDto;
+import ee.drivingschool.dto.CourseEditRequestDto;
+import ee.drivingschool.exception.CourseNotFoundException;
+import ee.drivingschool.exception.Errors;
 import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
@@ -12,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +32,7 @@ public class CourseService {
         this.teacherRepository = teacherRepository;
     }
 
-    public List<CourseDto> getAllCourses() {
+    public List<CourseDto> getAllCoursesDto() {
         List<Course> courses = courseRepository.findAll();
         return toCourseDto(courses);
     }
@@ -41,10 +45,6 @@ public class CourseService {
             courseDtoList.add(toCourseDto(course));
         }
         return courseDtoList;
-    }
-
-    public Course save(Course course) {
-        return courseRepository.save(course);
     }
 
     public CourseDto save(CourseCreationRequestDto courseCreationRequestDto) {
@@ -66,6 +66,7 @@ public class CourseService {
         courseDto.setCategory(course.getCategory());
         courseDto.setStartDate(course.getStartDate());
         courseDto.setEndDate(course.getEndDate());
+        courseDto.setStatus(course.getStatus());
         if (teacher != null) {
             courseDto.setTeacherName(teacher.getFullName());
         }
@@ -96,22 +97,19 @@ public class CourseService {
 
     }
 
-    public Course findCourseById(Long id) throws RuntimeException {
-
-
-        return courseRepository.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
+    public Course findCourseById(Long id) throws CourseNotFoundException {
+        return courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found", Errors.COURSE_NOT_FOUND));
     }
 
     private CourseEditDto toCourseEditDto(Course course) {
-
         Teacher teacher = course.getTeacher();
-
         CourseEditDto courseEditDto = new CourseEditDto();
         courseEditDto.setId(course.getId());
         courseEditDto.setCourseName(course.getCourseName());
         courseEditDto.setCategory(course.getCategory());
         courseEditDto.setStartDate(course.getStartDate());
         courseEditDto.setEndDate(course.getEndDate());
+        courseEditDto.setStatus(course.getStatus());
         if (teacher != null) {
             courseEditDto.setTeacherId(teacher.getId());
             courseEditDto.setTeacherName(teacher.getFullName());
@@ -119,16 +117,12 @@ public class CourseService {
         return courseEditDto;
     }
 
-    public CourseEditDto getCourseEditDtoById(Long id) {
-
+    public CourseEditDto getCourseEditDtoById(Long id) throws CourseNotFoundException {
         Course course = findCourseById(id);
-
         return toCourseEditDto(course);
-
     }
 
-    public void edit(Long id, CourseEditRequestDto courseEditRequestDto) {
-
+    public void edit(Long id, CourseEditRequestDto courseEditRequestDto) throws CourseNotFoundException {
         Teacher teacher = teacherRepository.getReferenceById(courseEditRequestDto.getTeacherId());
         Course course = findCourseById(id);
         course.setCourseName(courseEditRequestDto.getCourseName());
@@ -136,7 +130,7 @@ public class CourseService {
         course.setStartDate(courseEditRequestDto.getStartDate());
         course.setEndDate(courseEditRequestDto.getEndDate());
         course.setTeacher(teacher);
-
+        course.setStatus(courseEditRequestDto.getStatus());
         courseRepository.save(course);
     }
 
