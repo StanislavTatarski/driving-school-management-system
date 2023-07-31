@@ -40,6 +40,7 @@ public class Course {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Student> students;
@@ -145,4 +146,6 @@ public class Course {
                 ", updatedAt=" + updatedAt +
                 '}';
     }
+
+
 }

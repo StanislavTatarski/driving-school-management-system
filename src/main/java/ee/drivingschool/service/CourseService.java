@@ -1,15 +1,17 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.CourseCreationRequestDto;
-import ee.drivingschool.dto.CourseDto;
-import ee.drivingschool.dto.CourseEditDto;
-import ee.drivingschool.dto.CourseEditRequestDto;
+import ee.drivingschool.dto.*;
 import ee.drivingschool.exception.CourseNotFoundException;
 import ee.drivingschool.exception.Errors;
 import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.TeacherRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -116,4 +118,35 @@ public class CourseService {
         course.setStatus(courseEditRequestDto.getStatus());
         courseRepository.save(course);
     }
-}
+
+
+        public Page<CourseDto> findPaginated(int pageNo, int pageSize) {
+            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+            Page<Course> page = courseRepository.findAll(pageable);
+            List<CourseDto> courseDtoList = convertCourseListToDto(page.getContent());
+            return new PageImpl<>(courseDtoList, pageable, page.getTotalElements());
+        }
+
+        private List<CourseDto> convertCourseListToDto(List<Course> courseList) {
+            List<CourseDto> courseDtoList = new ArrayList<>();
+            for (Course course : courseList) {
+                Teacher teacher = course.getTeacher();
+                CourseDto courseDto = new CourseDto();
+                courseDto.setId(course.getId());
+                courseDto.setCourseName(course.getCourseName());
+                courseDto.setCategory(course.getCategory());
+                courseDto.setStartDate(course.getStartDate());
+                courseDto.setEndDate(course.getEndDate());
+                courseDto.setStatus(course.getStatus());
+                if (teacher != null) {
+                    courseDto.setTeacherName(teacher.getFullName());
+                }
+                courseDtoList.add(courseDto);
+            }
+            return courseDtoList;
+        }
+    }
+
+
+
+
