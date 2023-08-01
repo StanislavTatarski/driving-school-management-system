@@ -1,22 +1,11 @@
 package ee.drivingschool;
 
-import ee.drivingschool.model.Course;
-import ee.drivingschool.model.Student;
-import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.StudentRepository;
 import ee.drivingschool.repository.TeacherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
 
 @SpringBootApplication
 public class DrivingschoolApplication implements CommandLineRunner {
@@ -32,7 +21,6 @@ public class DrivingschoolApplication implements CommandLineRunner {
 		this.studentRepository = studentRepository;
 		this.teacherRepository = teacherRepository;
 	}
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(DrivingschoolApplication.class, args);
