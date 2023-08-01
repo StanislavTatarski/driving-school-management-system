@@ -20,9 +20,9 @@ public class StudentCreationRequestDto {
     @NotBlank(message = "Please enter a valid phone number")
     private String phone;
     @Email(message = "Please enter a valid email address")
-    @NotBlank(message = "Email address is required")
+    @NotBlank(message = "Email is mandatory")
     private String email;
-    @NotBlank(message = "Address is required")
+    @NotBlank(message = "Address is mandatory")
     private String address;
     private Long courseId;
     private String courseName;
