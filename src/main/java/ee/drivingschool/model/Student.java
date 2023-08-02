@@ -2,6 +2,8 @@ package ee.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,7 +20,6 @@ public class Student {
     private String firstName;
     private String lastName;
     private String idCode;
-
     private String phone;
     private String address;
     private String email;
@@ -37,6 +38,19 @@ public class Student {
     private Instant createdAt;
     @UpdateTimestamp
     private Instant updatedAt;
+
+    public Student() {
+    }
+
+    public Student(Long id, String firstName, String lastName, String idCode, String phone, String address, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.idCode = idCode;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+    }
 
     public Long getId() {
         return id;
