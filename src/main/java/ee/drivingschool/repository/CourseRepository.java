@@ -6,7 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
-
-    //PagingAndSortingRepository
-    //TODO: Implement this class
 }

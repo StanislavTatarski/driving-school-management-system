@@ -2,10 +2,8 @@ package ee.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
 import java.util.List;
@@ -24,6 +22,10 @@ public class Student {
     private String address;
     private String email;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
+    private Status status;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
@@ -34,15 +36,16 @@ public class Student {
     @JoinColumn(name = "driving_card_id")
     private List<DrivingCard> drivingCardList;
 
-    @CreationTimestamp
+    @CreatedDate
+    @Column(updatable = false)
     private Instant createdAt;
-    @UpdateTimestamp
+    @LastModifiedDate
     private Instant updatedAt;
 
     public Student() {
     }
 
-    public Student(Long id, String firstName, String lastName, String idCode, String phone, String address, String email) {
+    public Student(Long id, String firstName, String lastName, String idCode, String phone, String address, String email, Status status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +53,7 @@ public class Student {
         this.phone = phone;
         this.address = address;
         this.email = email;
+        this.status = status;
     }
 
     public Long getId() {
@@ -111,6 +115,10 @@ public class Student {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+    public Status getStatus() {return status;}
+
+    public void setStatus(Status status) {this.status = status;}
 
     public Instant getCreatedAt() {
         return createdAt;

@@ -8,15 +8,14 @@
 <body>
 <div layout:fragment="content">
     <h2>Courses</h2>
-
+  <br/>
     <div>
       <nav class="nav nav-pills flex-column flex-sm-row">
-        <a th:href = "@{/create}" class="btn btn-primary btn-sm mb-3"> + Add new course </a>
+        <a th:href = "@{/create}" type="button" class="btn btn-outline-success"> + Add new course </a>
 <!--        <a class="btn btn-primary btn-sm mb-3" aria-current="page" th:href="@{/admin/course/create}">+ Add new course</a>-->
       </nav>
     </div>
-    </br>
-
+<br/>
     <table class="table">
       <thead>
       <th>ID</th>
