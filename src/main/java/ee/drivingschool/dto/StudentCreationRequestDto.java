@@ -1,11 +1,9 @@
 package ee.drivingschool.dto;
 
+import ee.drivingschool.model.Status;
 import ee.drivingschool.validators.EstonianIdCode;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 @Data
 public class StudentCreationRequestDto {
@@ -25,5 +23,7 @@ public class StudentCreationRequestDto {
     @NotBlank(message = "Address is mandatory")
     private String address;
     private Long courseId;
+    @NotBlank(message = "Please select a course")
     private String courseName;
+    private Status status;
 }
