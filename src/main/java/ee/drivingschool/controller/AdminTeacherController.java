@@ -1,4 +1,4 @@
-package ee.drivingschool.controller.admin;
+package ee.drivingschool.controller;
 
 import ee.drivingschool.dto.TeacherCreationRequestDto;
 import ee.drivingschool.dto.TeacherDto;

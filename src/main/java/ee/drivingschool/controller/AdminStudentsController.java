@@ -1,9 +1,8 @@
-package ee.drivingschool.controller.admin;
+package ee.drivingschool.controller;
 
-import ee.drivingschool.dto.CourseDto;
-import ee.drivingschool.dto.StudentCreationRequestDto;
-import ee.drivingschool.dto.StudentDto;
-import ee.drivingschool.dto.StudentEditDto;
+import ee.drivingschool.dto.*;
+import ee.drivingschool.exception.StudentNotFoundException;
+import ee.drivingschool.model.Status;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.StudentService;
 import ee.drivingschool.service.TeacherService;
@@ -29,8 +28,13 @@ public class AdminStudentsController {
     }
 
     @GetMapping("/admin/students")
-    public String getAllStudents(final ModelMap modelMap) {
-        List<StudentDto> studentList = studentService.getAllStudentsDto();
+    public String getAllStudents(@RequestParam(value = "courseId", required = false) Long courseId, final ModelMap modelMap) {
+        List<StudentDto> studentList;
+        if (courseId != null) {
+            studentList = studentService.findCourseStudents(courseId);
+        } else {
+            studentList = studentService.getAllStudentsDto();
+        }
         modelMap.addAttribute("studentsList", studentList);
         return "admin-students";
     }
@@ -41,6 +45,7 @@ public class AdminStudentsController {
         List<CourseDto> courses = courseService.getAllCoursesDto();
         modelMap.addAttribute("studentDto", studentDto);
         modelMap.addAttribute("courses", courses);
+        modelMap.addAttribute("statuses", Status.values());
         return "create-student";
     }
     @PostMapping("admin/student/create")
@@ -57,14 +62,19 @@ public class AdminStudentsController {
 
     // ---------------------- EDIT STUDENT ----------------------
     @GetMapping("/admin/student/{id}")
-    public String showEditStudentForm(@PathVariable("id") Long id,  ModelMap modelMap) {
+    public String showEditStudentForm(@PathVariable("id") Long id,  ModelMap modelMap) throws StudentNotFoundException {
         StudentEditDto studentEditDto = studentService.getStudentDtoById(id);
+        List<CourseDto> courses = courseService.getAllCoursesDto();
         modelMap.addAttribute("student", studentEditDto);
+        modelMap.addAttribute("courses", courses);
+        modelMap.addAttribute("statuses", Status.values());
         return "edit-student";
     }
     @PostMapping("/admin/student/{id}")
-    public String editStudent(@PathVariable("id") Long id, @ModelAttribute("student") StudentEditDto studentEditDto) {
-        studentService.edit(id, studentEditDto);
+    public String editStudent(@PathVariable("id") Long id,
+                              @ModelAttribute("student")
+                              StudentEditRequestDto studentEditRequestDto) throws StudentNotFoundException {
+        studentService.edit(id, studentEditRequestDto);
         return "redirect:/admin/students";
     }
 

@@ -11,15 +11,15 @@
 
 <body>
 <div layout:fragment="content">
-<h1>Students</h1>
-
+<h2>Students</h2>
+    <br/>
     <div>
         <nav class="nav nav-pills flex-column flex-sm-row">
-            <a th:href = "@{/admin/student/create}" class="btn btn-primary btn-sm mb-3"> + Add new student </a>
+            <a th:href = "@{/admin/student/create}" type="button" class="btn btn-outline-success">+ Add new student</a>
+            <!--        <a class="btn btn-primary btn-sm mb-3" aria-current="page" th:href="@{/admin/course/create}">+ Add new course</a>-->
         </nav>
     </div>
-    </br>
-
+    <br/>
 <table class="table">
     <thead>
     <th>ID</th>
@@ -54,6 +54,10 @@
                 </svg>
                 <span class="visually-hidden">Button</span>
             </button>
+        </td>
+
+        <td>
+            <span th:text="${student.status}" th:classappend="${student.statusCssClass}" class="badge rounded-pill"></span>
         </td>
 
         <script>

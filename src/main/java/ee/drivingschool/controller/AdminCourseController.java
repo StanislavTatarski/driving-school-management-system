@@ -1,4 +1,4 @@
-package ee.drivingschool.controller.admin;
+package ee.drivingschool.controller;
 
 import ee.drivingschool.dto.*;
 import ee.drivingschool.exception.CourseNotFoundException;
@@ -7,7 +7,6 @@ import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.TeacherService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -23,7 +22,7 @@ public class AdminCourseController {
     }
 
     @GetMapping("/")
-    public String getCourses() {
+    public String getAllCourses() {
         return "redirect:/page/1";
     }
 
@@ -46,10 +45,10 @@ public class AdminCourseController {
     //---------------------- EDIT COURSE ----------------------
     @GetMapping("/admin/course/{id}")
     public String showEditCourseForm(@PathVariable("id") Long id, ModelMap modelMap) throws CourseNotFoundException {
-        CourseEditDto courseEditDto = courseService.getCourseEditDtoById(id);
+        CourseDto courseDto = courseService.getCourseEditDtoById(id);
         List<TeacherDto> teachers = teacherService.getAllTeachersDto();
         modelMap.addAttribute("teachers", teachers);
-        modelMap.addAttribute("course", courseEditDto);
+        modelMap.addAttribute("course", courseDto);
         modelMap.addAttribute("statuses", Status.values());
         return "edit-course";
     }
