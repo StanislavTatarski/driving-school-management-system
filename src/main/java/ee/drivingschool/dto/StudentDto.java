@@ -1,5 +1,6 @@
 package ee.drivingschool.dto;
 
+import ee.drivingschool.model.Status;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,4 +16,28 @@ public class StudentDto {
     private String address;
     private Long courseId;
     private String courseName;
+    private Status status;
+
+    public String getStatusCssClass() {
+        if (status == null) {
+            return "";
+        }
+        switch (status) {
+            case ACTIVE -> {
+                return "text-bg-success";
+            }
+            case INACTIVE -> {
+                return "text-bg-danger";
+            }
+            case DELETED -> {
+                return "text-bg-secondary";
+            }
+            case PENDING -> {
+                return "text-bg-warning";
+            }
+            default -> {
+                return "text-bg-info";
+            }
+        }
+    }
 }

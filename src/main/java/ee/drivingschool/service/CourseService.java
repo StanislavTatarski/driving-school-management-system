@@ -7,7 +7,6 @@ import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.TeacherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -56,7 +55,6 @@ public class CourseService {
     private CourseDto toCourseDto(Course course) {
 
         Teacher teacher = course.getTeacher();
-
         CourseDto courseDto = new CourseDto();
         courseDto.setId(course.getId());
         courseDto.setCourseName(course.getCourseName());
@@ -65,6 +63,7 @@ public class CourseService {
         courseDto.setEndDate(course.getEndDate());
         courseDto.setStatus(course.getStatus());
         if (teacher != null) {
+            courseDto.setTeacherId(teacher.getId());
             courseDto.setTeacherName(teacher.getFullName());
         }
         return courseDto;
@@ -83,10 +82,11 @@ public class CourseService {
     }
 
     public Course findCourseById(Long id) throws CourseNotFoundException {
-        return courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found", Errors.COURSE_NOT_FOUND));
+        return courseRepository.findById(id).orElseThrow(()
+                -> new CourseNotFoundException("Course not found", Errors.COURSE_NOT_FOUND));
     }
 
-    private CourseEditDto toCourseEditDto(Course course) {
+ /*   private CourseEditDto toCourseEditDto(Course course) {
         Teacher teacher = course.getTeacher();
         CourseEditDto courseEditDto = new CourseEditDto();
         courseEditDto.setId(course.getId());
@@ -100,11 +100,11 @@ public class CourseService {
             courseEditDto.setTeacherName(teacher.getFullName());
         }
         return courseEditDto;
-    }
+    }*/
 
-    public CourseEditDto getCourseEditDtoById(Long id) throws CourseNotFoundException {
+    public CourseDto getCourseEditDtoById(Long id) throws CourseNotFoundException {
         Course course = findCourseById(id);
-        return toCourseEditDto(course);
+        return toCourseDto(course);
     }
 
     public void edit(Long id, CourseEditRequestDto courseEditRequestDto) throws CourseNotFoundException {
@@ -145,7 +145,23 @@ public class CourseService {
             }
             return courseDtoList;
         }
+
+    public List<CourseDto> getAllCoursesDtoByCourseName() {
+        List<CourseDto> courseDtoList = new ArrayList<>();
+
+        for (Course course : courseRepository.findAll()) {
+            courseDtoList.add(toCourseDtoByCourseName(course));
+        }
+        return courseDtoList;
     }
+
+    private CourseDto toCourseDtoByCourseName(Course course) {
+        CourseDto courseDto = new CourseDto();
+        courseDto.setId(course.getId());
+        courseDto.setCourseName(course.getCourseName());
+        return courseDto;
+    }
+}
 
 
 

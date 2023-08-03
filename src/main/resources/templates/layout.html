@@ -12,15 +12,7 @@
 
 <body>
 
-<div class="container-fluid">
-  <!-- Include the sidebar -->
-  <div id="sidebar-placeholder"></div>
-
-  <!-- Main content -->
-  <main>
-    <!-- Your main content goes here -->
-  </main>
-</div>
+<div class="container-fluid"></div>
 
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -123,7 +115,7 @@
         </a>
       </li>
       <li>
-        <a id="drivingCardTab" href="#" class="nav-link text-white">
+        <a id="drivingCardTab" th:href="@{/driving_card}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#clipboard2"/></svg>
           Driving card
         </a>
@@ -163,13 +155,6 @@
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <form class="d-flex">
-        <button type="button" class="btn btn-primary position-relative">
-          New registrations
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-    +7
-    <span class="visually-hidden">unread messages</span>
-  </span>
-        </button>
         </form>
         <form class="d-flex">
           <button type="button" class="btn btn-dark">Logout</button>
