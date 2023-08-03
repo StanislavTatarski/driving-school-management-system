@@ -37,4 +37,9 @@ public class DrivingCard {
     @LastModifiedDate
     private Instant updatedAt;
 
+    public DrivingCard(Course course, Teacher teacher, Student student) {
+        this.course = course;
+        this.teacher = teacher;
+        this.student = student;
+    }
 }

@@ -87,7 +87,7 @@
             startDate: new Date(),
         }).on('changeDate', function(e) {
             const futureDate = new Date(e.date);
-            futureDate.setDate(futureDate.getDate() + 21);
+            futureDate.setDate(futureDate.getDate() + 45);
             $('#endDate').datepicker('setDate', futureDate);
             console.log(futureDate);
         });

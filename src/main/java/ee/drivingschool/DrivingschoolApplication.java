@@ -6,8 +6,10 @@ import ee.drivingschool.repository.TeacherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class DrivingschoolApplication implements CommandLineRunner {
 
 	private final CourseRepository courseRepository;

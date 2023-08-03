@@ -1,8 +1,8 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.TeacherCreationRequestDto;
-import ee.drivingschool.dto.TeacherDto;
-import ee.drivingschool.dto.TeacherResponseDto;
+import ee.drivingschool.dto.*;
+import ee.drivingschool.exception.Errors;
+import ee.drivingschool.exception.TeacherNotFoundException;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.TeacherRepository;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class TeacherService {
         return teacherDtoList;
     }
 
-    public TeacherResponseDto save(TeacherCreationRequestDto teacherCreationRequestDto) {
+    public TeacherResponseDto createNewTeacher(TeacherCreationRequestDto teacherCreationRequestDto) {
 
         Teacher savedTeacher = toTeacher(teacherCreationRequestDto);
         return toTeacherResponseDto(savedTeacher);
@@ -89,4 +89,35 @@ public class TeacherService {
     }
 
 
+    public TeacherEditDto getTeacherDtoById(Long id) throws TeacherNotFoundException {
+        Teacher teacher = findTeacherById(id);
+
+        return toTeacherEditDto(teacher);
+    }
+
+    private TeacherEditDto toTeacherEditDto(Teacher teacher) {
+        TeacherEditDto teacherEditDto = new TeacherEditDto();
+        teacherEditDto.setId(teacher.getId());
+        teacherEditDto.setFirstName(teacher.getFirstName());
+        teacherEditDto.setLastName(teacher.getLastName());
+        teacherEditDto.setPhone(teacher.getPhone());
+        teacherEditDto.setAddress(teacher.getAddress());
+        teacherEditDto.setEmail(teacher.getEmail());
+        return teacherEditDto;
+    }
+
+    private Teacher findTeacherById(Long id) throws TeacherNotFoundException {
+        return teacherRepository.findById(id).orElseThrow(()
+                -> new TeacherNotFoundException("Teacher not found", Errors.TEACHER_NOT_FOUND));
+    }
+
+    public void edit(Long id, TeacherEditRequestDto teacherEditRequestDto) throws TeacherNotFoundException {
+        Teacher teacher = findTeacherById(id);
+        teacher.setFirstName(teacherEditRequestDto.getFirstName());
+        teacher.setLastName(teacherEditRequestDto.getLastName());
+        teacher.setPhone(teacherEditRequestDto.getPhone());
+        teacher.setAddress(teacherEditRequestDto.getAddress());
+        teacher.setEmail(teacherEditRequestDto.getEmail());
+        teacherRepository.save(teacher);
+    }
 }
