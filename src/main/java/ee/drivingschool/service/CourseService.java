@@ -43,7 +43,7 @@ public class CourseService {
         return courseDtoList;
     }
 
-    public CourseDto save(CourseCreationRequestDto courseCreationRequestDto) {
+    public CourseDto createNewCourse(CourseCreationRequestDto courseCreationRequestDto) {
 
         Course course = toCourse2(courseCreationRequestDto);
 

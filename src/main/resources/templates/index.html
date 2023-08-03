@@ -66,7 +66,7 @@
       </tbody>
     </table>
 
-    <nav aria-label="Page navigation example">
+    <nav th:if="${totalPages > 1}" aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item">
           <a class="page-link" th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage - 1}}">Previous</a>

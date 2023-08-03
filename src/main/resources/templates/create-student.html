@@ -67,11 +67,11 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <label for="courses">Course</label>
-                <select id="courses" class="form-select" aria-label="Select a course" th:field="*{courseId}" th:classappend="${#fields.hasErrors('courseName') ? 'is-invalid' : ''}">
-                    <option value="">Select course</option>
+                <select id="courses" class="form-select" aria-label="Select a course" th:field="*{courseId}" th:classappend="${#fields.hasErrors('courseId') ? 'is-invalid' : ''}">
+                    <option value="0">Select course</option>
                     <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"></option>
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}"></div>
                 </select>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('courseId')}" th:errors="*{courseId}"></div>
             </div>
         </div>
         <div class="row">

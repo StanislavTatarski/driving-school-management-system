@@ -1,8 +1,7 @@
 package ee.drivingschool.service;
 
 import ee.drivingschool.dto.DrivingCardDto;
-import ee.drivingschool.model.DrivingCard;
-import ee.drivingschool.model.DrivingCardItem;
+import ee.drivingschool.model.*;
 import ee.drivingschool.repository.DrivingCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,5 +50,12 @@ public class DriverCardService {
         }
 
         return drivingCardItems;
+    }
+
+    public DrivingCard createNewDrivingCard(Student student) {
+
+        Course course = student.getCourse();
+        DrivingCard drivingCard = new DrivingCard(course, course.getTeacher(), student);
+        return drivingCardRepository.save(drivingCard);
     }
 }

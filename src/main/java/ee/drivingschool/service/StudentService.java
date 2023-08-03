@@ -64,13 +64,9 @@ public class StudentService {
         return studentDto;
     }
 
-    public StudentDto save(StudentCreationRequestDto studentCreationRequestDto) {
-
+    public Student createNewStudent(StudentCreationRequestDto studentCreationRequestDto) {
         Student student = toStudent(studentCreationRequestDto);
-
-        Student savedStudent = studentRepository.save(student);
-
-        return toStudentDto(savedStudent);
+        return studentRepository.save(student);
     }
 
     private Student toStudent(StudentCreationRequestDto studentCreationRequestDto) {
@@ -81,7 +77,6 @@ public class StudentService {
         } catch (CourseNotFoundException e) {
             course = null;
         }
-
         Student student = new Student();
         student.setFirstName(studentCreationRequestDto.getFirstName());
         student.setLastName(studentCreationRequestDto.getLastName());
