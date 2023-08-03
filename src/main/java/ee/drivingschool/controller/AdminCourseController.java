@@ -61,7 +61,7 @@ public class AdminCourseController {
 
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, ModelMap modelMap) {
-        int pageSize = 5;
+        int pageSize = 9;
 
         Page<CourseDto> page = courseService.findPaginated(pageNo, pageSize);
         List<CourseDto> listCourses = page.getContent();
