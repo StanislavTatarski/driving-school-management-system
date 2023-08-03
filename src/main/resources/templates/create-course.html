@@ -74,10 +74,9 @@
             orientation: 'auto',
             startDate: new Date(),
         }).on('changeDate', function(e) {
-                // const futureDate = new Date(e.date);
-                // futureDate.setDate(futureDate.getDate() + 21);
-                // $('#endDate').datepicker('setDate', futureDate);
-                // console.log(futureDate);
+            const futureDate = new Date(e.date);
+            futureDate.setDate(futureDate.getDate() + 45);
+            $('#endDate').datepicker('setDate', futureDate);
         });
         $('#endDate').datepicker({
             format: 'dd.mm.yyyy',
