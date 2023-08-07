@@ -120,4 +120,8 @@ public class TeacherService {
         teacher.setEmail(teacherEditRequestDto.getEmail());
         teacherRepository.save(teacher);
     }
+
+    public boolean isTeacherWithEmailExists(String email) {
+        return teacherRepository.findAllByEmail(email).size() > 0;
+    }
 }

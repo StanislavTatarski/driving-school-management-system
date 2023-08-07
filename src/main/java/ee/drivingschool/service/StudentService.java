@@ -141,4 +141,8 @@ public class StudentService {
         List<Student> students = studentRepository.findAllByCourseId(courseId);
         return toStudentDtoList(students);
     }
+
+    public boolean isStudentWithEmailExists(String email) {
+        return studentRepository.findAllByEmail(email).size() > 0;
+    }
 }
