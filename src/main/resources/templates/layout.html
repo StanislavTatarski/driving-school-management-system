@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
@@ -102,13 +103,15 @@
           Courses
         </a>
       </li>
+      <li sec:authorize="hasAuthority('ADMIN')">
+        <a id="studentsTab" th:href="@{/admin/students}" class="nav-link text-white">
       <li>
         <a id="studentsTab" th:href="@{/admin/students/1}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#mortarboard-fill"/></svg>
           Students
         </a>
       </li>
-      <li>
+      <li sec:authorize="hasAuthority('ADMIN')">
         <a id="teachersTab" th:href="@{/admin/teachers}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           Teachers
@@ -166,7 +169,7 @@
         <form class="d-flex">
         </form>
         <form class="d-flex">
-          <button type="button" class="btn btn-dark">Logout</button>
+          <a id="logout" th:href="@{/logout}" class="btn btn-dark">Logout</a>
         </form>
       </div>
     </nav>

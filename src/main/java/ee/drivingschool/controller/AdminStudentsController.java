@@ -3,10 +3,14 @@ package ee.drivingschool.controller;
 import ee.drivingschool.dto.*;
 import ee.drivingschool.exception.StudentNotFoundException;
 import ee.drivingschool.model.Status;
+import ee.drivingschool.model.Student;
 import ee.drivingschool.service.CourseService;
+import ee.drivingschool.service.DriverCardService;
 import ee.drivingschool.service.StudentService;
 import ee.drivingschool.service.TeacherService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,15 +22,17 @@ import java.util.List;
 @Controller
 public class AdminStudentsController {
 
-    private final StudentService studentService;
-    private final CourseService courseService;
-    private final TeacherService teacherService;
+    @Autowired
+    private StudentService studentService;
 
-    public AdminStudentsController(StudentService studentService, CourseService courseService, TeacherService teacherService) {
-        this.studentService = studentService;
-        this.courseService = courseService;
-        this.teacherService = teacherService;
-    }
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private TeacherService teacherService;
+
+    @Autowired
+    private DriverCardService driverCardService;
 
     @GetMapping("/admin/students")
     public String getAllStudents() {
@@ -47,10 +53,13 @@ public class AdminStudentsController {
                                 BindingResult result, ModelMap modelMap) {
         List<CourseDto> courses = courseService.getAllCoursesDto();
         if (result.hasErrors()) {
+            List<CourseDto> courses = courseService.getAllCoursesDto();
             modelMap.addAttribute("courses", courses);
+            modelMap.addAttribute("statuses", Status.values());
             return "create-student";
         }
-        studentService.save(studentCreationRequestDto);
+        Student student = studentService.createNewStudent(studentCreationRequestDto);
+        driverCardService.createNewDrivingCard(student);
         return "redirect:/admin/students";
     }
 

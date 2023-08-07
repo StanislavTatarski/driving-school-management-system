@@ -22,8 +22,7 @@ public class StudentCreationRequestDto {
     private String email;
     @NotBlank(message = "Address is mandatory")
     private String address;
+    @Min(value = 1, message = "Please select a course")
     private Long courseId;
-    @NotBlank(message = "Please select a course")
-    private String courseName;
     private Status status;
 }

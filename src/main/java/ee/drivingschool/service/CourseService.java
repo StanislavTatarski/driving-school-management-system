@@ -7,6 +7,7 @@ import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.TeacherRepository;
+import ee.drivingschool.utils.DateUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -43,7 +44,7 @@ public class CourseService {
         return courseDtoList;
     }
 
-    public CourseDto save(CourseCreationRequestDto courseCreationRequestDto) {
+    public CourseDto createNewCourse(CourseCreationRequestDto courseCreationRequestDto) {
 
         Course course = toCourse2(courseCreationRequestDto);
 
@@ -59,8 +60,8 @@ public class CourseService {
         courseDto.setId(course.getId());
         courseDto.setCourseName(course.getCourseName());
         courseDto.setCategory(course.getCategory());
-        courseDto.setStartDate(course.getStartDate());
-        courseDto.setEndDate(course.getEndDate());
+        courseDto.setStartDate(DateUtils.convertLocalDateToString(course.getStartDate()));
+        courseDto.setEndDate(DateUtils.convertLocalDateToString(course.getEndDate()));
         courseDto.setStatus(course.getStatus());
         if (teacher != null) {
             courseDto.setTeacherId(teacher.getId());
@@ -119,8 +120,8 @@ public class CourseService {
                 courseDto.setId(course.getId());
                 courseDto.setCourseName(course.getCourseName());
                 courseDto.setCategory(course.getCategory());
-                courseDto.setStartDate(course.getStartDate());
-                courseDto.setEndDate(course.getEndDate());
+                courseDto.setStartDate(DateUtils.convertLocalDateToString(course.getStartDate()));
+                courseDto.setEndDate(DateUtils.convertLocalDateToString(course.getEndDate()));
                 courseDto.setStatus(course.getStatus());
                 if (teacher != null) {
                     courseDto.setTeacherName(teacher.getFullName());

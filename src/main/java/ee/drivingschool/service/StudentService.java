@@ -66,13 +66,9 @@ public class StudentService {
         return studentDto;
     }
 
-    public StudentDto save(StudentCreationRequestDto studentCreationRequestDto) {
-
+    public Student createNewStudent(StudentCreationRequestDto studentCreationRequestDto) {
         Student student = toStudent(studentCreationRequestDto);
-
-        Student savedStudent = studentRepository.save(student);
-
-        return toStudentDto(savedStudent);
+        return studentRepository.save(student);
     }
 
     private Student toStudent(StudentCreationRequestDto studentCreationRequestDto) {
@@ -175,5 +171,9 @@ public class StudentService {
             studentDtoList.add(studentDto);
         }
         return studentDtoList;
+    }
+
+    public boolean isStudentWithEmailExists(String email) {
+        return studentRepository.findAllByEmail(email).size() > 0;
     }
 }

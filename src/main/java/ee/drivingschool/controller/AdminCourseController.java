@@ -6,6 +6,7 @@ import ee.drivingschool.model.Status;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.TeacherService;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class AdminCourseController {
     }
 
     // ---------------------- CREATE NEW COURSE ----------------------
-    @GetMapping("/create")
+    @GetMapping("/admin/course/create")
     public String showCreateCourseForm(ModelMap modelMap) {
         CourseDto courseDto = new CourseDto();
         List<TeacherDto> teachers = teacherService.getAllTeachersDto();
@@ -36,9 +37,9 @@ public class AdminCourseController {
         return "create-course";
     }
 
-    @PostMapping("/admin/course")
+    @PostMapping("/admin/course/create")
     public String createCourse(@ModelAttribute("course") CourseCreationRequestDto courseCreationRequestDto) {
-        courseService.save(courseCreationRequestDto);
+        courseService.createNewCourse(courseCreationRequestDto);
         return "redirect:/";
     }
 
