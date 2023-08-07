@@ -3,7 +3,6 @@ package ee.drivingschool.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDate;
 
 @Data
@@ -21,9 +20,9 @@ public class DrivingLesson {
 
     private String topic;
 
-    private LocalDate drivingStartAt;
+    private LocalDate startAt;
 
-    private LocalDate drivingEndAt;
+    private int durationInMinutes;
 
     private DrivingLessonStatus status;
 
