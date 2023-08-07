@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +30,13 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeHttpRequests((authorize) -> authorize
-                                .requestMatchers("/admin/students").hasAnyAuthority("TEACHER", "ADMIN")
-                                .requestMatchers("/admin/teachers").hasAnyAuthority("TEACHER", "ADMIN")
-
-                                .requestMatchers("/admin/*").hasAnyAuthority("ADMIN")
-                                .requestMatchers("/admin/*/*").hasAnyAuthority("ADMIN")
-                                .anyRequest().authenticated()
+                        .requestMatchers("/admin/students").hasAnyAuthority("TEACHER", "ADMIN")
+                        .requestMatchers("/admin/teachers").hasAnyAuthority("TEACHER", "ADMIN")
+                        .requestMatchers("/admin/*").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/admin/*/*").hasAnyAuthority("ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

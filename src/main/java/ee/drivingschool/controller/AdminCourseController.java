@@ -37,7 +37,7 @@ public class AdminCourseController {
         return "create-course";
     }
 
-    @PostMapping("/admin/course")
+    @PostMapping("/admin/course/create")
     public String createCourse(@ModelAttribute("course") CourseCreationRequestDto courseCreationRequestDto) {
         courseService.createNewCourse(courseCreationRequestDto);
         return "redirect:/";
