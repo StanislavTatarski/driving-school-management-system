@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -30,9 +31,12 @@ public class Course {
 
     private LocalDate endDate;
 
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private Status status;
+
+
 
 
     @JsonIgnore

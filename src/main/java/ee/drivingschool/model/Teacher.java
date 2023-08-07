@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 public class Teacher {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +26,17 @@ public class Teacher {
     private Instant createdAt;
     @UpdateTimestamp
     private Instant updatedAt;
+    public Teacher() {
+
+    }
+    public Teacher(long id, String firstName, String lastName, String phone, String address, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+    }
 
     public Long getId() {
         return id;

@@ -1,8 +1,7 @@
 package ee.drivingschool.dto;
 
 import ee.drivingschool.model.Status;
-import ee.drivingschool.utils.DateUtils;
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 

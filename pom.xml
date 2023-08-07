@@ -86,6 +86,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-reflect</artifactId>
+            <version>3.4</version>
+            <scope>test</scope>
+        </dependency>
 
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
@@ -93,7 +99,7 @@
 			<version>3.2.0</version>
 		</dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

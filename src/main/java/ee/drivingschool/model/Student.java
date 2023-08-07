@@ -116,9 +116,12 @@ public class Student {
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
-//                ", course=" + course +
+                ", course=" + course +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
+    }
+
+    public void setid(Long id) {
     }
 }
