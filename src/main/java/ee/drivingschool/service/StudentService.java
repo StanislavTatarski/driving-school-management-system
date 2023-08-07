@@ -1,16 +1,18 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.StudentCreationRequestDto;
-import ee.drivingschool.dto.StudentDto;
-import ee.drivingschool.dto.StudentEditDto;
-import ee.drivingschool.dto.StudentEditRequestDto;
+import ee.drivingschool.dto.*;
 import ee.drivingschool.exception.CourseNotFoundException;
 import ee.drivingschool.exception.Errors;
 import ee.drivingschool.exception.StudentNotFoundException;
 import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Status;
 import ee.drivingschool.model.Student;
+import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.StudentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,5 +147,33 @@ public class StudentService {
     public List<StudentDto> findCourseStudents(Long courseId) {
         List<Student> students = studentRepository.findAllByCourseId(courseId);
         return toStudentDtoList(students);
+    }
+
+    public Page<StudentDto> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Student> page = studentRepository.findAll(pageable);
+        List<StudentDto> studentDtoList = convertStudentListToDto(page.getContent());
+        return new PageImpl<>(studentDtoList, pageable, page.getTotalElements());
+    }
+
+    private List<StudentDto> convertStudentListToDto(List<Student> studentList) {
+        List<StudentDto> studentDtoList = new ArrayList<>();
+        for (Student student : studentList) {
+            Course course = student.getCourse();
+            StudentDto studentDto = new StudentDto();
+            studentDto.setId(student.getId());
+            studentDto.setIdCode(student.getIdCode());
+            studentDto.setAddress(student.getAddress());
+            studentDto.setPhone(student.getPhone());
+            studentDto.setEmail(student.getEmail());
+            studentDto.setStatus(student.getStatus());
+            studentDto.setFirstName(student.getFirstName());
+            studentDto.setLastName(student.getLastName());
+            if (course != null) {
+                studentDto.setCourseName(course.getCourseName());
+            }
+            studentDtoList.add(studentDto);
+        }
+        return studentDtoList;
     }
 }

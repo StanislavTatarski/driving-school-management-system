@@ -86,22 +86,6 @@ public class CourseService {
                 -> new CourseNotFoundException("Course not found", Errors.COURSE_NOT_FOUND));
     }
 
- /*   private CourseEditDto toCourseEditDto(Course course) {
-        Teacher teacher = course.getTeacher();
-        CourseEditDto courseEditDto = new CourseEditDto();
-        courseEditDto.setId(course.getId());
-        courseEditDto.setCourseName(course.getCourseName());
-        courseEditDto.setCategory(course.getCategory());
-        courseEditDto.setStartDate(course.getStartDate());
-        courseEditDto.setEndDate(course.getEndDate());
-        courseEditDto.setStatus(course.getStatus());
-        if (teacher != null) {
-            courseEditDto.setTeacherId(teacher.getId());
-            courseEditDto.setTeacherName(teacher.getFullName());
-        }
-        return courseEditDto;
-    }*/
-
     public CourseDto getCourseEditDtoById(Long id) throws CourseNotFoundException {
         Course course = findCourseById(id);
         return toCourseDto(course);

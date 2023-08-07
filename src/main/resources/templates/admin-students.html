@@ -7,6 +7,7 @@
     <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.js"></script>
     <link href="/sidebars.css" rel="stylesheet">
     <title>Students</title>
+    <link rel="stylesheet" type="text/css" href="/pagination.css">
 </head>
 
 <body>
@@ -64,15 +65,46 @@
   function openStudentEditWindow(button) {
     var row = button.parentNode.parentNode;
 
-    var courseId = row.cells[0].innerText;
+    var studentId = row.cells[0].innerText;
 
-    window.open('http://localhost:8080/admin/student/' + ID, '_self');
+    window.open('http://localhost:8080/admin/student/' + studentId, '_self');
   }
 </script>
-
     </tr>
     </tbody>
 </table>
+
+    <div class="pagination-container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage > 1}" th:href="@{'/admin/students/' + ${currentPage - 1}}">Previous</a>
+                    <span class="page-link" th:unless="${currentPage > 1}">Previous</span>
+                </li>
+
+                <!-- Show the first page link -->
+                <li class="page-item" th:class="${currentPage == 1} ? 'active' : ''" th:if="${currentPage > 1}">
+                    <a class="page-link" th:if="${currentPage != 1}" th:href="@{'/admin/students/' + ${currentPage - 1}}" th:text="${currentPage - 1}">1</a>
+                    <span class="page-link" th:unless="${currentPage != 1}" th:text="${currentPage - 1}">1</span>
+                </li>
+
+                <!-- Show the current page link -->
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link" th:text="${currentPage}">2</span>
+                </li>
+
+                <!-- Show the next page link -->
+                <li class="page-item" th:class="${currentPage == totalPages} ? 'active' : ''" th:if="${currentPage < totalPages}">
+                    <a class="page-link" th:href="@{'/admin/students/' + ${currentPage + 1}}" th:text="${currentPage + 1}">3</a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/students/' + ${currentPage + 1}}">Next</a>
+                    <span class="page-link" th:unless="${currentPage < totalPages}">Next</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
 </div>
 </body>

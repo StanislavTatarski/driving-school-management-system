@@ -7,6 +7,7 @@ import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.StudentService;
 import ee.drivingschool.service.TeacherService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,15 +29,8 @@ public class AdminStudentsController {
     }
 
     @GetMapping("/admin/students")
-    public String getAllStudents(@RequestParam(value = "courseId", required = false) Long courseId, final ModelMap modelMap) {
-        List<StudentDto> studentList;
-        if (courseId != null) {
-            studentList = studentService.findCourseStudents(courseId);
-        } else {
-            studentList = studentService.getAllStudentsDto();
-        }
-        modelMap.addAttribute("studentsList", studentList);
-        return "admin-students";
+    public String getAllStudents() {
+        return "redirect:/admin/students/1";
     }
 
     // ---------------------- CREATE NEW STUDENT ----------------------
@@ -76,6 +70,22 @@ public class AdminStudentsController {
                               StudentEditRequestDto studentEditRequestDto) throws StudentNotFoundException {
         studentService.edit(id, studentEditRequestDto);
         return "redirect:/admin/students";
+    }
+
+    @GetMapping("admin/students/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, ModelMap modelMap) {
+        int pageSize = 1;
+
+        Page<StudentDto> page = studentService.findPaginated(pageNo, pageSize);
+        List<StudentDto> listStudents = page.getContent();
+
+
+        modelMap.addAttribute("currentPage", pageNo);
+        modelMap.addAttribute("totalPages", page.getTotalPages());
+        modelMap.addAttribute("totalItems", page.getTotalElements());
+        modelMap.addAttribute("studentsList", listStudents);
+
+        return "admin-students";
     }
 
 

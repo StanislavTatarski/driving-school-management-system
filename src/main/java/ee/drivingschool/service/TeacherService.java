@@ -1,10 +1,17 @@
 package ee.drivingschool.service;
 
+import ee.drivingschool.dto.StudentDto;
 import ee.drivingschool.dto.TeacherCreationRequestDto;
 import ee.drivingschool.dto.TeacherDto;
 import ee.drivingschool.dto.TeacherResponseDto;
+import ee.drivingschool.model.Course;
+import ee.drivingschool.model.Student;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.TeacherRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +93,28 @@ public class TeacherService {
         teacherDto.setFirstName(teacher.getFirstName());
         teacherDto.setLastName(teacher.getLastName());
         return teacherDto;
+    }
+
+    public Page<TeacherDto> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Teacher> page = teacherRepository.findAll(pageable);
+        List<TeacherDto> teacherDtoList = convertTeacherListToDto(page.getContent());
+        return new PageImpl<>(teacherDtoList, pageable, page.getTotalElements());
+    }
+
+    private List<TeacherDto> convertTeacherListToDto(List<Teacher> teacherList) {
+        List<TeacherDto> teacherDtoList = new ArrayList<>();
+        for (Teacher teacher : teacherList) {
+            TeacherDto teacherDto = new TeacherDto();
+            teacherDto.setId(teacher.getId());
+            teacherDto.setFirstName(teacher.getFirstName());
+            teacherDto.setAddress(teacher.getAddress());
+            teacherDto.setPhone(teacher.getPhone());
+            teacherDto.setEmail(teacher.getEmail());
+            teacherDto.setLastName(teacher.getLastName());
+            teacherDtoList.add(teacherDto);
+        }
+        return teacherDtoList;
     }
 
 

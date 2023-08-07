@@ -103,7 +103,7 @@
         </a>
       </li>
       <li>
-        <a id="studentsTab" th:href="@{/admin/students}" class="nav-link text-white">
+        <a id="studentsTab" th:href="@{/admin/students/1}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#mortarboard-fill"/></svg>
           Students
         </a>
@@ -115,7 +115,7 @@
         </a>
       </li>
       <li>
-        <a id="drivingCardTab" href="@{/driving_card}" class="nav-link text-white">
+        <a id="drivingCardTab" th:href="@{/driving_card}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#clipboard2"/></svg>
           Driving card
         </a>
@@ -132,15 +132,24 @@
   <script>
   // Wait for the DOM to be ready
   $(document).ready(function() {
-    // Get the current page URL
-    var currentPageURL = window.location.href;
+    // Function to get the base URL without the page number
+    function getBaseURLWithoutPageNumber(url) {
+      return url.replace(/\/\d+$/, ''); // Remove the last digits if present (page number)
+    }
+
+    // Function to check if the tab's base URL matches the current page's base URL
+    function isTabActive(tabURL) {
+      var currentPageURL = window.location.pathname;
+      var tabBaseURL = getBaseURLWithoutPageNumber(tabURL);
+      return currentPageURL.startsWith(tabBaseURL);
+    }
 
     // Loop through each tab to find the one matching the current URL
     $('#coursesTab, #studentsTab, #teachersTab, #drivingCardTab, #calendarTab').each(function() {
       var tabURL = $(this).attr('href');
 
-      // Check if the current tab's URL matches the current page URL
-      if (currentPageURL.indexOf(tabURL) !== -1) {
+      // Check if the current tab's base URL matches the current page's base URL
+      if (isTabActive(tabURL)) {
         $(this).addClass('active');
       }
     });
