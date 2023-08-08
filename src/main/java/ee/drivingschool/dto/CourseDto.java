@@ -11,8 +11,8 @@ public class CourseDto {
     private Long id;
     private String courseName;
     private String category;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String startDate;
+    private String endDate;
     private Long teacherId;
     private String teacherName;
     private Status status;
@@ -42,13 +42,4 @@ public class CourseDto {
             }
         }
     }
-
-//    public String getStartDate() {
-//        return DateUtils.convertLocalDateToString(startDate);
-//    }
-//
-//    public String getEndDate() {
-//        return DateUtils.convertLocalDateToString(endDate);
-//    }
-    // TODO: fix this code later
 }

@@ -2,8 +2,8 @@ package ee.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import java.time.Instant;
 import java.util.List;
 
@@ -22,14 +22,27 @@ public class Teacher {
     @JsonIgnore
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private List<Course> courses;
-    @CreationTimestamp
+    @CreatedDate
+    @Column(updatable = false)
     private Instant createdAt;
-    @UpdateTimestamp
+    @LastModifiedDate
     private Instant updatedAt;
     public Teacher() {
 
     }
     public Teacher(long id, String firstName, String lastName, String phone, String address, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+    }
+
+    public Teacher() {
+    }
+
+    public Teacher(Long id, String firstName, String lastName, String phone, String address, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

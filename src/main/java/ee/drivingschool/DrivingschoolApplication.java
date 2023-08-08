@@ -1,18 +1,26 @@
 package ee.drivingschool;
 
+import ee.drivingschool.model.User;
 import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.StudentRepository;
 import ee.drivingschool.repository.TeacherRepository;
+import ee.drivingschool.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class DrivingschoolApplication implements CommandLineRunner {
 
 	private final CourseRepository courseRepository;
 	private final StudentRepository studentRepository;
 	private final TeacherRepository teacherRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	public DrivingschoolApplication(CourseRepository courseRepository,
 									StudentRepository studentRepository,
@@ -29,6 +37,14 @@ public class DrivingschoolApplication implements CommandLineRunner {
 //	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
+
+//		User User1 = new User (1L, "user1@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
+//		User User2 = new User (2L, "user2@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
+//		User admin1 = new User(3L, "admin1@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
+//
+//		userRepository.save(User1);
+//		userRepository.save(User2);
+//		userRepository.save(admin1);
 
 /*		Teacher teacher1 = createTeacher("Jason", "Bourne", "+37254348984", "Tuukri 15-17",
 				"jason@gmail.com");
@@ -88,6 +104,6 @@ public class DrivingschoolApplication implements CommandLineRunner {
 		student.setEmail(email);
 		student.setCourse(course);
 		return studentRepository.save(student);*/
-//
+
 	}
 }

@@ -3,12 +3,15 @@ package ee.drivingschool.service;
 import ee.drivingschool.dto.StudentCreationRequestDto;
 import ee.drivingschool.dto.StudentDto;
 import ee.drivingschool.dto.StudentEditDto;
+import ee.drivingschool.dto.StudentEditRequestDto;
 import ee.drivingschool.exception.CourseNotFoundException;
+import ee.drivingschool.exception.Errors;
+import ee.drivingschool.exception.StudentNotFoundException;
 import ee.drivingschool.model.Course;
+import ee.drivingschool.model.Status;
 import ee.drivingschool.model.Student;
 import ee.drivingschool.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +51,12 @@ public class StudentService {
         studentDto.setPhone(student.getPhone());
         studentDto.setEmail(student.getEmail());
         studentDto.setAddress(student.getAddress());
+
+        Status status = student.getStatus();
+        if (status != null) {
+            studentDto.setStatus(student.getStatus());
+        }
+
         Course course = student.getCourse();
         if (course != null) {
             studentDto.setCourseName(course.getCourseName());
@@ -55,13 +64,9 @@ public class StudentService {
         return studentDto;
     }
 
-    public StudentDto save(StudentCreationRequestDto studentCreationRequestDto) {
-
+    public Student createNewStudent(StudentCreationRequestDto studentCreationRequestDto) {
         Student student = toStudent(studentCreationRequestDto);
-
-        Student savedStudent = studentRepository.save(student);
-
-        return toStudentDto(savedStudent);
+        return studentRepository.save(student);
     }
 
     private Student toStudent(StudentCreationRequestDto studentCreationRequestDto) {
@@ -72,7 +77,6 @@ public class StudentService {
         } catch (CourseNotFoundException e) {
             course = null;
         }
-
         Student student = new Student();
         student.setFirstName(studentCreationRequestDto.getFirstName());
         student.setLastName(studentCreationRequestDto.getLastName());
@@ -80,6 +84,7 @@ public class StudentService {
         student.setPhone(studentCreationRequestDto.getPhone());
         student.setEmail(studentCreationRequestDto.getEmail());
         student.setAddress(studentCreationRequestDto.getAddress());
+        student.setStatus(studentCreationRequestDto.getStatus());
 
         if (course != null) {
             student.setCourse(course);
@@ -87,7 +92,7 @@ public class StudentService {
         return student;
     }
 
-    public StudentEditDto getStudentDtoById(Long id) {
+    public StudentEditDto getStudentDtoById(Long id) throws StudentNotFoundException {
 
         Student student = findStudentById(id);
 
@@ -96,28 +101,48 @@ public class StudentService {
 
     private StudentEditDto toStudentEditDto(Student student) {
 
+        Course course = student.getCourse();
+
         StudentEditDto studentEditDto = new StudentEditDto();
+        studentEditDto.setId(student.getId());
         studentEditDto.setFirstName(student.getFirstName());
         studentEditDto.setLastName(student.getLastName());
         studentEditDto.setIdCode(student.getIdCode());
         studentEditDto.setPhone(student.getPhone());
         studentEditDto.setEmail(student.getEmail());
         studentEditDto.setAddress(student.getAddress());
+        studentEditDto.setStatus(student.getStatus());
+        if (course != null) {
+            studentEditDto.setCourseId(course.getId());
+            studentEditDto.setCourseName(course.getCourseName());
+        }
         return studentEditDto;
     }
 
-    private Student findStudentById(Long id) throws RuntimeException {
-        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Student not found"));
+    private Student findStudentById(Long id) throws StudentNotFoundException {
+        return studentRepository.findById(id).orElseThrow(()
+                -> new StudentNotFoundException("Student not found", Errors.STUDENT_NOT_FOUND));
     }
 
-    public void edit(Long id, StudentEditDto studentEditDto) {
+    public void edit(Long id, StudentEditRequestDto studentEditRequestDto) throws StudentNotFoundException {
 
         Student student = findStudentById(id);
-        student.setFirstName(studentEditDto.getFirstName());
-        student.setLastName(studentEditDto.getLastName());
-        student.setIdCode(studentEditDto.getIdCode());
-        student.setPhone(studentEditDto.getPhone());
-        student.setEmail(studentEditDto.getEmail());
-        student.setAddress(studentEditDto.getAddress());
+        student.setFirstName(studentEditRequestDto.getFirstName());
+        student.setLastName(studentEditRequestDto.getLastName());
+        student.setIdCode(studentEditRequestDto.getIdCode());
+        student.setPhone(studentEditRequestDto.getPhone());
+        student.setEmail(studentEditRequestDto.getEmail());
+        student.setAddress(studentEditRequestDto.getAddress());
+        student.setStatus(studentEditRequestDto.getStatus());
+        studentRepository.save(student);
+    }
+
+    public List<StudentDto> findCourseStudents(Long courseId) {
+        List<Student> students = studentRepository.findAllByCourseId(courseId);
+        return toStudentDtoList(students);
+    }
+
+    public boolean isStudentWithEmailExists(String email) {
+        return studentRepository.findAllByEmail(email).size() > 0;
     }
 }

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
   <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="/sidebars.css" rel="stylesheet">
 
   <title>Index</title>
@@ -11,15 +13,7 @@
 
 <body>
 
-<div class="container-fluid">
-  <!-- Include the sidebar -->
-  <div id="sidebar-placeholder"></div>
-
-  <!-- Main content -->
-  <main>
-    <!-- Your main content goes here -->
-  </main>
-</div>
+<div class="container-fluid"></div>
 
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -104,38 +98,56 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a th:href="@{/}" class="nav-link active" aria-current="page">
+        <a id="coursesTab" th:href="@{/page/1}" class="nav-link text-white" >
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
           Courses
         </a>
       </li>
-      <li>
-        <a th:href="@{/admin/students}" class="nav-link text-white">
+      <li sec:authorize="hasAuthority('ADMIN')">
+        <a id="studentsTab" th:href="@{/admin/students}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#mortarboard-fill"/></svg>
           Students
         </a>
       </li>
-      <li>
-        <a th:href="@{/admin/teachers}" class="nav-link text-white">
+      <li sec:authorize="hasAuthority('ADMIN')">
+        <a id="teachersTab" th:href="@{/admin/teachers}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           Teachers
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a id="drivingCardTab" th:href="@{/driving_card}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#clipboard2"/></svg>
           Driving card
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a id="calendarTab" href="#" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
           Calendar
         </a>
       </li>
-
     </ul>
   </div>
+
+  <script>
+  // Wait for the DOM to be ready
+  $(document).ready(function() {
+    // Get the current page URL
+    var currentPageURL = window.location.href;
+
+    // Loop through each tab to find the one matching the current URL
+    $('#coursesTab, #studentsTab, #teachersTab, #drivingCardTab, #calendarTab').each(function() {
+      var tabURL = $(this).attr('href');
+
+      // Check if the current tab's URL matches the current page URL
+      if (currentPageURL.indexOf(tabURL) !== -1) {
+        $(this).addClass('active');
+      }
+    });
+  });
+</script>
+
 
   <div class="b-example-divider"></div>
 
@@ -143,18 +155,10 @@
 
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand">Navbar</a>
         <form class="d-flex">
-        <button type="button" class="btn btn-primary position-relative">
-          New registrations
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-    +7
-    <span class="visually-hidden">unread messages</span>
-  </span>
-        </button>
         </form>
         <form class="d-flex">
-          <button type="button" class="btn btn-dark">Logout</button>
+          <a id="logout" th:href="@{/logout}" class="btn btn-dark">Logout</a>
         </form>
       </div>
     </nav>

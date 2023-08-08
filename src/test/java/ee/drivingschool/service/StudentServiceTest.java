@@ -1,97 +1,72 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.StudentCreationRequestDto;
+import ee.drivingschool.dto.CourseDto;
 import ee.drivingschool.dto.StudentDto;
-import ee.drivingschool.exception.CourseNotFoundException;
+import ee.drivingschool.exception.StudentNotFoundException;
 import ee.drivingschool.model.Course;
+import ee.drivingschool.model.Status;
 import ee.drivingschool.model.Student;
+import ee.drivingschool.model.Teacher;
+import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.StudentRepository;
-import org.junit.jupiter.api.BeforeEach;
+import ee.drivingschool.repository.TeacherRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class StudentServiceTest {
 
     @Mock
-    private StudentRepository studentRepository;
+    CourseRepository courseRepository;
 
     @Mock
-    private CourseService courseService;
+    CourseService courseService;
 
-    @InjectMocks
-    private StudentService studentService;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    @Mock
+    StudentRepository studentRepository;
 
     @Test
-    public void testGetAllStudents_returnSuccessfully() {
+    public void testToStudentEditDto_returnSuccessfully() throws StudentNotFoundException {
         // Given
-        List<Student> students = new ArrayList<>();
-        students.add(createStudent(1L, "Mark", "Sillan", "384567846354", "+37234758763", "mark@gmail.com", "Gonsiori 12", null));
-        students.add(createStudent(2L, "Billy", "Bob", "384561146399", "+37234758743", "billy@gmail.com", "Mustamäe tee 121-15", null));
-        when(studentRepository.findAll()).thenReturn(students);
+        Student student = new Student(1L,
+                "Mark",
+                "Peterson",
+                "38412070234",
+                "+3725638234",
+                "Tuukri põik 15",
+                "test@gmail.com",
+                Status.ACTIVE);
+
+        Course course1 = Course.builder()
+                .id(1L).courseName("50-T-A-23-01")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now())
+                .status(Status.ACTIVE)
+                .build();
+
+        student.setCourse(course1);
 
         // When
-        List<StudentDto> studentDtoList = studentService.getAllStudentsDto();
+        when(studentRepository.findById(anyLong())).thenReturn(Optional.of(student));
+        StudentService studentService = new StudentService(studentRepository, courseService);
+        StudentDto studentDto = studentService.getStudentDtoById(1L);
 
         // Then
-        assertEquals(2, studentDtoList.size());
-        assertEquals(studentDtoList.get(0).getId(), null);
+        assertEquals(1L, studentDto.getId());
+        assertEquals(course1.getId(), studentDto.getCourseId());
+        assertEquals(course1.getCourseName(), studentDto.getCourseName());
 
-    }
 
-    @Test
-    public void testSave() throws CourseNotFoundException {
-        // Given
-        StudentCreationRequestDto requestDto = new StudentCreationRequestDto();
-        requestDto.setFirstName("Mark");
-        requestDto.setLastName("Sillan");
-        requestDto.setIdCode("384567846354");
-        requestDto.setPhone("+37234758763");
-        requestDto.setEmail("mark@gmail.com");
-        requestDto.setAddress("Gonsiori 12");
-
-        Course course = createCourse(1L, "Test Course");
-        when(courseService.findCourseById(1L)).thenReturn(course);
-
-        // When
-        StudentDto savedStudentDto = studentService.save(requestDto);
-
-        // Then
-        assertEquals(requestDto.getFirstName(), savedStudentDto.getFirstName());
-        assertEquals(requestDto.getLastName(), savedStudentDto.getLastName());
-        assertEquals(requestDto.getIdCode(), savedStudentDto.getIdCode());
-
-    }
-
-    private Student createStudent(Long id, String firstName, String lastName, String idCode, String phone, String email, String address, Course course) {
-        Student student = new Student();
-        student.setid(id);
-        student.setFirstName(firstName);
-        student.setLastName(lastName);
-        student.setIdCode(idCode);
-        student.setPhone(phone);
-        student.setEmail(email);
-        student.setAddress(address);
-        student.setCourse(course);
-        return student;
-    }
-
-    private Course createCourse(Long id, String courseName) {
-        Course course = new Course();
-        course.setId(id);
-        course.setCourseName(courseName);
-        return course;
     }
 }

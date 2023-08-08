@@ -13,10 +13,10 @@
 </head>
 <body>
 <div layout:fragment="content">
-<h1>Add new student</h1>
+<h2>Add new student</h2>
 
 <div class="container">
-    </br></br>
+
     <form action="/admin/student/create" method="post" th:object="${studentDto}">
 
         <div class="row">
@@ -67,14 +67,25 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <label for="courses">Course</label>
-                <select id="courses" class="form-select" aria-label="Select a course" th:field="*{courseId}">
-                    <option value="">Select course</option>
+                <select id="courses" class="form-select" aria-label="Select a course" th:field="*{courseId}" th:classappend="${#fields.hasErrors('courseId') ? 'is-invalid' : ''}">
+                    <option value="0">Select course</option>
                     <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}"></option>
+                </select>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('courseId')}" th:errors="*{courseId}"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <label for="status">Status:</label>
+                <select class="form-select" th:field="*{status}" id="status">
+                    <option th:each="statusOption : ${statuses}"
+                            th:value="${statusOption}"
+                            th:text="${statusOption}"
+                    >
+                    </option>
                 </select>
             </div>
         </div>
-
-
         </br>
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -84,18 +95,18 @@
     </form>
 </div>
 
-<script type="application/javascript">
-    $(function (){
-        const config = {
-            search: true, // Toggle search feature. Default: false
-            creatable: false, // Creatable selection. Default: false
-            clearable: false, // Clearable selection. Default: false
-            maxHeight: '360px', // Max height for showing scrollbar. Default: 360px
-            size: '', // Can be "sm" or "lg". Default ''
-        };
-        dselect(document.querySelector('#courses'), config);
-    });
-</script>
+<!--<script type="application/javascript">-->
+<!--    $(function (){-->
+<!--        const config = {-->
+<!--            search: true, // Toggle search feature. Default: false-->
+<!--            creatable: false, // Creatable selection. Default: false-->
+<!--            clearable: false, // Clearable selection. Default: false-->
+<!--            maxHeight: '360px', // Max height for showing scrollbar. Default: 360px-->
+<!--            size: '', // Can be "sm" or "lg". Default ''-->
+<!--        };-->
+<!--        dselect(document.querySelector('#coursesqqq'), config);-->
+<!--    });-->
+<!--</script>-->
 </div>
 </body>
 </html>

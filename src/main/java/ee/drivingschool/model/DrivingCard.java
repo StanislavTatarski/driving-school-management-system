@@ -3,8 +3,8 @@ package ee.drivingschool.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
 
@@ -31,9 +31,15 @@ public class DrivingCard {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @CreationTimestamp
+    @CreatedDate
+    @Column(updatable = false)
     private Instant createdAt;
-    @UpdateTimestamp
+    @LastModifiedDate
     private Instant updatedAt;
 
+    public DrivingCard(Course course, Teacher teacher, Student student) {
+        this.course = course;
+        this.teacher = teacher;
+        this.student = student;
+    }
 }

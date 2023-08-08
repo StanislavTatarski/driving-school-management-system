@@ -1,9 +1,10 @@
 package ee.drivingschool.repository;
 
-import ee.drivingschool.model.Course;
+import ee.drivingschool.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
 }
