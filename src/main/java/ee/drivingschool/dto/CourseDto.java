@@ -1,9 +1,7 @@
 package ee.drivingschool.dto;
 
 import ee.drivingschool.model.Status;
-import lombok.Data;
-
-import java.time.LocalDate;
+import lombok.*;
 
 @Data
 public class CourseDto {

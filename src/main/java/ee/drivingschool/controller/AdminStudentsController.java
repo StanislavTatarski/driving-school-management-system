@@ -5,12 +5,11 @@ import ee.drivingschool.exception.StudentNotFoundException;
 import ee.drivingschool.model.Status;
 import ee.drivingschool.model.Student;
 import ee.drivingschool.service.CourseService;
-import ee.drivingschool.service.DriverCardService;
+import ee.drivingschool.service.DrivingCardService;
 import ee.drivingschool.service.StudentService;
 import ee.drivingschool.service.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -31,7 +30,7 @@ public class AdminStudentsController {
     private TeacherService teacherService;
 
     @Autowired
-    private DriverCardService driverCardService;
+    private DrivingCardService drivingCardService;
 
     @GetMapping("/admin/students")
     public String getAllStudents(@RequestParam(value = "courseId", required = false) Long courseId, final ModelMap modelMap) {
@@ -64,7 +63,7 @@ public class AdminStudentsController {
             return "create-student";
         }
         Student student = studentService.createNewStudent(studentCreationRequestDto);
-        driverCardService.createNewDrivingCard(student);
+        drivingCardService.createNewDrivingCard(student);
         return "redirect:/admin/students";
     }
 
@@ -84,6 +83,13 @@ public class AdminStudentsController {
                               StudentEditRequestDto studentEditRequestDto) throws StudentNotFoundException {
         studentService.edit(id, studentEditRequestDto);
         return "redirect:/admin/students";
+    }
+
+    // ---------------------- STUDENT PAGE ----------------------
+    @GetMapping("/student")
+    public String showStudentPage(ModelMap modelMap) {
+        return "layout-student";
+
     }
 
 

@@ -1,16 +1,17 @@
 package ee.drivingschool.service;
 
 import ee.drivingschool.dto.DrivingCardDto;
+import ee.drivingschool.exception.DrivingCardNotFoundException;
+import ee.drivingschool.exception.Errors;
 import ee.drivingschool.model.*;
 import ee.drivingschool.repository.DrivingCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DriverCardService {
+public class DrivingCardService {
 
     @Autowired
     private DrivingCardRepository drivingCardRepository;
@@ -57,5 +58,10 @@ public class DriverCardService {
         Course course = student.getCourse();
         DrivingCard drivingCard = new DrivingCard(course, course.getTeacher(), student);
         return drivingCardRepository.save(drivingCard);
+    }
+
+    public DrivingCard findDrivingCardById(Long id) throws DrivingCardNotFoundException {
+        return drivingCardRepository.findById(id).orElseThrow(()
+                -> new DrivingCardNotFoundException("Driving Card not found", Errors.DRIVING_CARD_NOT_FOUND));
     }
 }

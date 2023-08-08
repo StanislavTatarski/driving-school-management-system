@@ -1,23 +1,17 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.CourseDto;
 import ee.drivingschool.dto.StudentDto;
 import ee.drivingschool.exception.StudentNotFoundException;
 import ee.drivingschool.model.Course;
 import ee.drivingschool.model.Status;
 import ee.drivingschool.model.Student;
-import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.StudentRepository;
-import ee.drivingschool.repository.TeacherRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
