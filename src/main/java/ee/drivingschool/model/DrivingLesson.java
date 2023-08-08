@@ -2,7 +2,10 @@ package ee.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 @Data
@@ -10,7 +13,7 @@ import java.time.LocalDate;
 public class DrivingLesson {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonIgnore
@@ -19,12 +22,19 @@ public class DrivingLesson {
     private DrivingCard drivingCard;
 
     private String topic;
-
     private LocalDate startAt;
-
     private int durationInMinutes;
-
     private DrivingLessonStatus status;
-
     private String studentComment;
+
+    public DrivingLesson() {
+    }
+
+    public DrivingLesson(DrivingCard drivingCard, String topic, LocalDate startAt, int durationInMinutes, DrivingLessonStatus status) {
+        this.drivingCard = drivingCard;
+        this.topic = topic;
+        this.startAt = startAt;
+        this.durationInMinutes = durationInMinutes;
+        this.status = status;
+    }
 }
