@@ -142,4 +142,8 @@ public class Student {
                 ", updatedAt=" + updatedAt +
                 '}';
     }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

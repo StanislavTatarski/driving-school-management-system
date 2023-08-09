@@ -1,10 +1,12 @@
 package ee.drivingschool.service;
 
+import ee.drivingschool.dto.DrivingLessonCreationRequestDto;
 import ee.drivingschool.dto.DrivingLessonsDto;
+import ee.drivingschool.exception.DrivingCardNotFoundException;
 import ee.drivingschool.model.DrivingCard;
 import ee.drivingschool.model.DrivingLesson;
-import ee.drivingschool.model.DrivingLessonStatus;
 import ee.drivingschool.repository.DrivingLessonRepository;
+import ee.drivingschool.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class DrivingLessonService {
 
     @Autowired
     private DrivingLessonRepository drivingLessonRepository;
+
+    @Autowired
+    private DrivingCardService drivingCardService;
 
     public List<DrivingLessonsDto> getAllDrivingLessonsOnDate(LocalDate date) {
         List<DrivingLesson> drivingLessons = drivingLessonRepository.findAllByStartAt(date);
@@ -35,7 +40,7 @@ public class DrivingLessonService {
 
     private DrivingLessonsDto toDrivingLessonsDto(DrivingLesson drivingLesson) {
 
-        DrivingCard drivingCardId = drivingLesson.getDrivingCard();
+        DrivingCard drivingCard = drivingLesson.getDrivingCard();
 
         DrivingLessonsDto drivingLessonsDto = new DrivingLessonsDto();
         drivingLessonsDto.setId(drivingLesson.getId());
@@ -43,15 +48,21 @@ public class DrivingLessonService {
         drivingLessonsDto.setStartAt(drivingLesson.getStartAt());
         drivingLessonsDto.setDurationInMinutes(drivingLesson.getDurationInMinutes());
         drivingLessonsDto.setStudentComment(drivingLesson.getStudentComment());
-
-        if (drivingCardId != null) {
-            drivingLessonsDto.setDrivingCardId(drivingCardId.getId());
-        }
-
-        DrivingLessonStatus status = drivingLesson.getStatus();
-        if (status != null) {
-            drivingLessonsDto.setStatus(drivingLesson.getStatus());
-        }
+        drivingLessonsDto.setStudentFullName(drivingCard.getStudent().getFullName());
+        drivingLessonsDto.setDrivingCardId(drivingCard.getId());
+        drivingLessonsDto.setStatus(drivingLesson.getStatus());
+        drivingLessonsDto.setStartTime(drivingLesson.getStartTime());
         return drivingLessonsDto;
+    }
+
+    public DrivingLesson create(Long drivingCardId, DrivingLessonCreationRequestDto drivingLessonCreationRequestDto) throws DrivingCardNotFoundException {
+        DrivingCard drivingCard = drivingCardService.getDrivingCardById(drivingCardId);
+        DrivingLesson drivingLesson = new DrivingLesson();
+        drivingLesson.setTopic(drivingLessonCreationRequestDto.getTopic());
+        drivingLesson.setStartAt(DateUtils.convertDate(drivingLessonCreationRequestDto.getStartAt()));
+        drivingLesson.setStartTime(drivingLessonCreationRequestDto.getStartTime());
+        drivingLesson.setStatus(drivingLessonCreationRequestDto.getStatus());
+        drivingLesson.setDrivingCard(drivingCard);
+        return drivingLessonRepository.save(drivingLesson);
     }
 }

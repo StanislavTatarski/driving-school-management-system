@@ -9,8 +9,8 @@ import lombok.Data;
 public class DrivingCardDto {
 
     private Long id;
-    private Course courseName;
-    private Student studentName;
-    private Teacher teacherName;
+    private String courseName;
+    private String studentName;
+    private String teacherName;
 
 }

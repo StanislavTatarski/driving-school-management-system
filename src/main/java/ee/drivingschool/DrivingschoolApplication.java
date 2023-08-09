@@ -1,9 +1,6 @@
 package ee.drivingschool;
 
-import ee.drivingschool.exception.DrivingCardNotFoundException;
 import ee.drivingschool.model.DrivingCard;
-import ee.drivingschool.model.DrivingLesson;
-import ee.drivingschool.model.DrivingLessonStatus;
 import ee.drivingschool.repository.*;
 import ee.drivingschool.service.DrivingCardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-
-import java.time.LocalDate;
 
 @SpringBootApplication
 @EnableJpaAuditing
@@ -48,11 +43,14 @@ public class DrivingschoolApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 
-//		DrivingCard drivingCardId = drivingCardService.findDrivingCardById(1L);
-//
-//		DrivingLesson drivingLesson1 = new DrivingLesson (drivingCardId, "S1", LocalDate.now(), 45, DrivingLessonStatus.BOOKED);
-//		DrivingLesson drivingLesson2 = new DrivingLesson (drivingCardId, "S3", LocalDate.now(), 130, DrivingLessonStatus.BOOKED);
+		DrivingCard drivingCard = drivingCardService.getDrivingCardById(2L);
 
+
+//		DrivingLesson drivingLesson1 = new DrivingLesson (drivingCard, "S2", LocalDate.now(), 45, DrivingLessonStatus.PASSED);
+//		DrivingLesson drivingLesson2 = new DrivingLesson (drivingCard, "S3", LocalDate.now(), 130, DrivingLessonStatus.BOOKED);
+
+//		drivingLesson1.setStudentComment("Want to cancel today lesson");
+//
 //		drivingLessonRepository.save(drivingLesson1);
 //		drivingLessonRepository.save(drivingLesson2);
 
