@@ -3,6 +3,7 @@ package ee.drivingschool.dto;
 import ee.drivingschool.model.DrivingLessonStatus;
 import lombok.Data;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 public class DrivingLessonsDto {
@@ -14,6 +15,8 @@ public class DrivingLessonsDto {
     private DrivingLessonStatus status;
     private String studentComment;
     private Long drivingCardId;
+    private String studentFullName;
+    private LocalTime startTime;
 
     public String getStatusCssClass() {
         if (status == null) {

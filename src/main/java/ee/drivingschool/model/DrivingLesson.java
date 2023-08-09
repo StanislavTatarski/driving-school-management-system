@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -26,6 +27,7 @@ public class DrivingLesson {
     private int durationInMinutes;
     private DrivingLessonStatus status;
     private String studentComment;
+    private LocalTime startTime;
 
     public DrivingLesson() {
     }
