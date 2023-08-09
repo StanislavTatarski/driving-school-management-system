@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="layout">
 <head>
     <meta charset="UTF-8">
@@ -21,11 +22,6 @@
 
     <div class="container">
         <div class="row">
-            <div>
-                <nav class="nav nav-pills flex-column flex-sm-row">
-                    <a th:href = "@{/lesson/create/1}" type="button" class="btn btn-outline-success">+ Add new lesson</a>
-                </nav>
-            </div>
             <div class="col-lg-4 col-xl-3 pb-3">
 
                 <div id="datepicker" th:data-date="${selectedDate}"></div>
@@ -43,13 +39,15 @@
                 </script>
             </div>
             <div class="col-lg-8 col-xl-9">
-                <table class="table table-sm">
+                <div class="alert alert-primary" role="alert" th:if="${drivingLessonsList.size() == 0}">No lessons today</div>
+                <table th:if="${drivingLessonsList.size() > 0}" class="table table-sm">
                     <thead>
                     <th>Card nr:</th>
                     <th>Topic</th>
                     <th>Time</th>
                     <th>Status</th>
                     <th>Student</th>
+                    <th sec:authorize="hasAnyAuthority('TEACHER', 'ADMIN')">Add next lesson</th>
                     </thead>
                     <tbody th:each="drivinglesson : ${drivingLessonsList}">
                     <tr>
@@ -61,10 +59,20 @@
                                   class="badge rounded-pill"></span>
                         </td>
                         <td th:text="${drivinglesson.studentFullName}"></td>
-
+                        <td sec:authorize="hasAnyAuthority('TEACHER', 'ADMIN')">
+                            <a th:href="@{'/lesson/create/' + ${drivinglesson.drivingCardId}}" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" tabindex="-1" role="button">+ Add lesson</a>
+                        </td>
                     </tr>
-                    <tr class="table-warning" th:if="${drivinglesson.studentComment}">
-                        <td colspan="5">Student comment: <span th:text="${drivinglesson.studentComment}"></span></td>
+                    <tr sec:authorize="hasAnyAuthority('TEACHER', 'ADMIN')" class="table-warning" th:if="${drivinglesson.studentComment}">
+                        <td colspan="6">Student comment: <span th:text="${drivinglesson.studentComment}"></span></td>
+                    </tr>
+                    <tr sec:authorize="hasAuthority('STUDENT')" class="table-warning">
+                        <td colspan="6" class="p-2" style="text-align: right">
+                            <form method="post" th:action="@{'/lesson/comment/' + ${drivinglesson.id}}">
+                                <textarea placeholder="Write your comment for teacher here" class="form-control" name="comment" rows="2" th:text="${drivinglesson.studentComment}"></textarea>
+                                <input class="btn btn-outline-success m-2" type="submit" value="Save">
+                            </form>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

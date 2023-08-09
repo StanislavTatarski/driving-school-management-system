@@ -1,9 +1,12 @@
 package ee.drivingschool.service;
 
-import ee.drivingschool.dto.*;
+import ee.drivingschool.dto.CourseCreationRequestDto;
+import ee.drivingschool.dto.CourseDto;
+import ee.drivingschool.dto.CourseEditRequestDto;
 import ee.drivingschool.exception.CourseNotFoundException;
 import ee.drivingschool.exception.Errors;
 import ee.drivingschool.model.Course;
+import ee.drivingschool.model.Status;
 import ee.drivingschool.model.Teacher;
 import ee.drivingschool.repository.CourseRepository;
 import ee.drivingschool.repository.TeacherRepository;
@@ -78,6 +81,7 @@ public class CourseService {
                 .startDate(courseCreationRequestDto.getStartDate())
                 .endDate(courseCreationRequestDto.getEndDate())
                 .teacher(teacher)
+                .status(Status.PENDING)
                 .build();
         return course;
     }
@@ -105,31 +109,31 @@ public class CourseService {
     }
 
 
-        public Page<CourseDto> findPaginated(int pageNo, int pageSize) {
-            Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-            Page<Course> page = courseRepository.findAll(pageable);
-            List<CourseDto> courseDtoList = convertCourseListToDto(page.getContent());
-            return new PageImpl<>(courseDtoList, pageable, page.getTotalElements());
-        }
+    public Page<CourseDto> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Course> page = courseRepository.findAll(pageable);
+        List<CourseDto> courseDtoList = convertCourseListToDto(page.getContent());
+        return new PageImpl<>(courseDtoList, pageable, page.getTotalElements());
+    }
 
-        private List<CourseDto> convertCourseListToDto(List<Course> courseList) {
-            List<CourseDto> courseDtoList = new ArrayList<>();
-            for (Course course : courseList) {
-                Teacher teacher = course.getTeacher();
-                CourseDto courseDto = new CourseDto();
-                courseDto.setId(course.getId());
-                courseDto.setCourseName(course.getCourseName());
-                courseDto.setCategory(course.getCategory());
-                courseDto.setStartDate(DateUtils.convertLocalDateToString(course.getStartDate()));
-                courseDto.setEndDate(DateUtils.convertLocalDateToString(course.getEndDate()));
-                courseDto.setStatus(course.getStatus());
-                if (teacher != null) {
-                    courseDto.setTeacherName(teacher.getFullName());
-                }
-                courseDtoList.add(courseDto);
+    private List<CourseDto> convertCourseListToDto(List<Course> courseList) {
+        List<CourseDto> courseDtoList = new ArrayList<>();
+        for (Course course : courseList) {
+            Teacher teacher = course.getTeacher();
+            CourseDto courseDto = new CourseDto();
+            courseDto.setId(course.getId());
+            courseDto.setCourseName(course.getCourseName());
+            courseDto.setCategory(course.getCategory());
+            courseDto.setStartDate(DateUtils.convertLocalDateToString(course.getStartDate()));
+            courseDto.setEndDate(DateUtils.convertLocalDateToString(course.getEndDate()));
+            courseDto.setStatus(course.getStatus());
+            if (teacher != null) {
+                courseDto.setTeacherName(teacher.getFullName());
             }
-            return courseDtoList;
+            courseDtoList.add(courseDto);
         }
+        return courseDtoList;
+    }
 
     public List<CourseDto> getAllCoursesDtoByCourseName() {
         List<CourseDto> courseDtoList = new ArrayList<>();

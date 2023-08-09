@@ -3,6 +3,8 @@ package ee.drivingschool.service;
 import ee.drivingschool.dto.DrivingLessonCreationRequestDto;
 import ee.drivingschool.dto.DrivingLessonsDto;
 import ee.drivingschool.exception.DrivingCardNotFoundException;
+import ee.drivingschool.exception.DrivingLessonNotFoundException;
+import ee.drivingschool.exception.Errors;
 import ee.drivingschool.model.DrivingCard;
 import ee.drivingschool.model.DrivingLesson;
 import ee.drivingschool.repository.DrivingLessonRepository;
@@ -64,5 +66,14 @@ public class DrivingLessonService {
         drivingLesson.setStatus(drivingLessonCreationRequestDto.getStatus());
         drivingLesson.setDrivingCard(drivingCard);
         return drivingLessonRepository.save(drivingLesson);
+    }
+    public DrivingLesson getDrivingLessonById(Long id) throws DrivingLessonNotFoundException {
+        return drivingLessonRepository.findById(id).orElseThrow(()
+                -> new DrivingLessonNotFoundException("Driving Lesson not found", Errors.DRIVING_LESSON_NOT_FOUND));
+    }
+
+    public void changeStudentComment(DrivingLesson drivingLesson, String studentComment) {
+        drivingLesson.setStudentComment(studentComment);
+        drivingLessonRepository.save(drivingLesson);
     }
 }

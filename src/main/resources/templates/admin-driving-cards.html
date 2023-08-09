@@ -19,14 +19,18 @@
         <th>Course</th>
         <th>Student name</th>
         <th>Teacher name</th>
+        <th>Add driving lesson</th>
         </thead>
 
         <tbody>
         <tr th:each="drivingcard : ${driving_cards}">
             <td th:text="${drivingcard.id}"></td>
-            <td ><a th:href="@{'/admin/students?courseId=' + ${drivingcard.courseId}}" th:text="${drivingcard.courseName}"></a></td>
+            <td><a th:href="@{'/admin/students?courseId=' + ${drivingcard.courseId}}" th:text="${drivingcard.courseName}"></a></td>
             <td th:text="${drivingcard.studentFullName}"></td>
             <td th:text="${drivingcard.teacherFullName}"></td>
+            <td>
+                <a th:href="@{'/lesson/create/' + ${drivingcard.id}}" class="btn btn-primary btn-sm" tabindex="-1" role="button">Add lesson</a>
+            </td>
         </tr>
         </tbody>
     </table>

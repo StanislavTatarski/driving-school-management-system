@@ -4,7 +4,9 @@ import ee.drivingschool.dto.DrivingCardDto;
 import ee.drivingschool.dto.DrivingLessonCreationRequestDto;
 import ee.drivingschool.dto.DrivingLessonsDto;
 import ee.drivingschool.exception.DrivingCardNotFoundException;
+import ee.drivingschool.exception.DrivingLessonNotFoundException;
 import ee.drivingschool.model.DrivingCard;
+import ee.drivingschool.model.DrivingLesson;
 import ee.drivingschool.model.DrivingLessonStatus;
 import ee.drivingschool.service.DrivingCardService;
 import ee.drivingschool.service.DrivingLessonService;
@@ -56,5 +58,10 @@ public class DrivingLessonsController {
         drivingLessonService.create(drivingCardId, drivingLessonCreationRequestDto);
         return "redirect:/lessons?date=" + drivingLessonCreationRequestDto.getStartAt();
     }
-
+    @PostMapping("/lesson/comment/{lessonId}")
+    public String createLessonStudentComment(@PathVariable("lessonId") Long lessonId, @RequestParam String comment) throws DrivingLessonNotFoundException {
+        DrivingLesson drivingLesson = drivingLessonService.getDrivingLessonById(lessonId);
+        drivingLessonService.changeStudentComment(drivingLesson, comment); // TODO: Validate student ID
+        return "redirect:/lessons?date=" + DateUtils.convertLocalDateToString(drivingLesson.getStartAt());
+    }
 }
