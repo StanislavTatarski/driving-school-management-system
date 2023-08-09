@@ -10,6 +10,8 @@ import ee.drivingschool.service.StudentService;
 import ee.drivingschool.service.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -41,7 +43,7 @@ public class AdminStudentsController {
             studentList = studentService.getAllStudentsDto();
         }
         modelMap.addAttribute("studentsList", studentList);
-        return "admin-students";
+        return "admin-students/1";
     }
 
     // ---------------------- CREATE NEW STUDENT ----------------------
@@ -90,6 +92,22 @@ public class AdminStudentsController {
     public String showStudentPage(ModelMap modelMap) {
         return "layout-student";
 
+    }
+
+    @GetMapping("admin/students/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, ModelMap modelMap) {
+        int pageSize = 1;
+
+        Page<StudentDto> page = studentService.findPaginated(pageNo, pageSize);
+        List<StudentDto> listStudents = page.getContent();
+
+
+        modelMap.addAttribute("currentPage", pageNo);
+        modelMap.addAttribute("totalPages", page.getTotalPages());
+        modelMap.addAttribute("totalItems", page.getTotalElements());
+        modelMap.addAttribute("studentsList", listStudents);
+
+        return "admin-students";
     }
 
 

@@ -11,6 +11,8 @@ public class TeacherDto {
     private String address;
     private String email;
 
+    private String teacherName;
+
     public String getFullName() {
         return firstName + " " + lastName;
     }

@@ -40,4 +40,10 @@ public class StudentDto {
             }
         }
     }
+
+    public void setTeacher(TeacherDto convertTeacherToDto) {
+    }
+
+    public void setTeacherName(String fullName) {
+    }
 }
