@@ -34,9 +34,21 @@ public class AdminStudentsController {
     @Autowired
     private DriverCardService driverCardService;
 
+//    @GetMapping("/admin/students")
+//    public String getAllStudents() {
+//        return "redirect:/admin/students/1";
+//    }
+
     @GetMapping("/admin/students")
-    public String getAllStudents() {
-        return "redirect:/admin/students/1";
+    public String getAllStudents(@RequestParam(value = "courseId", required = false) Long courseId, final ModelMap modelMap) {
+        List<StudentDto> studentList;
+        if (courseId != null) {
+            studentList = studentService.findCourseStudents(courseId);
+        } else {
+            studentList = studentService.getAllStudentsDto();
+        }
+        modelMap.addAttribute("studentsList", studentList);
+        return "admin-students/1";
     }
 
     // ---------------------- CREATE NEW STUDENT ----------------------
@@ -53,7 +65,7 @@ public class AdminStudentsController {
                                 BindingResult result, ModelMap modelMap) {
         List<CourseDto> courses = courseService.getAllCoursesDto();
         if (result.hasErrors()) {
-            List<CourseDto> courses = courseService.getAllCoursesDto();
+//            List<CourseDto> courses = courseService.getAllCoursesDto();
             modelMap.addAttribute("courses", courses);
             modelMap.addAttribute("statuses", Status.values());
             return "create-student";

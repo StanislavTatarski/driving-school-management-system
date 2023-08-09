@@ -38,13 +38,13 @@ public class DrivingschoolApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-//		User User1 = new User (1L, "user1@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
-//		User User2 = new User (2L, "user2@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
-//		User admin1 = new User(3L, "admin1@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
-//
-//		userRepository.save(User1);
-//		userRepository.save(User2);
-//		userRepository.save(admin1);
+		User User1 = new User (1L, "student@example.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", false);
+		User User2 = new User (2L, "teacher@example.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", false);
+		User admin1 = new User(3L, "admin@example.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
+
+		userRepository.save(User1);
+		userRepository.save(User2);
+		userRepository.save(admin1);
 
 /*		Teacher teacher1 = createTeacher("Jason", "Bourne", "+37254348984", "Tuukri 15-17",
 				"jason@gmail.com");
