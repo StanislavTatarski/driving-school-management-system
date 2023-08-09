@@ -22,7 +22,7 @@
     <div class="container">
         <div class="row">
             <div>
-                <nav class="nav nav-pills flex-column flex-sm-row">
+                <nav class="nav nav-pills flex-column flex-sm-row" sec:authorize="hasAuthority('TEACHER')">
                     <a th:href = "@{/lesson/create/1}" type="button" class="btn btn-outline-success">+ Add new lesson</a>
                 </nav>
             </div>

@@ -97,7 +97,7 @@
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
+      <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
         <a id="coursesTab" th:href="@{/page/1}" class="nav-link text-white" >
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
           Courses
@@ -115,7 +115,7 @@
           Teachers
         </a>
       </li>
-      <li>
+      <li sec:authorize="hasAnyAuthority('TEACHER', 'ADMIN')">
         <a id="drivingCardTab" th:href="@{/driving_card}" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#clipboard2"/></svg>
           Driving card

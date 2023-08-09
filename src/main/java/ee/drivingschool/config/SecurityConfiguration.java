@@ -34,8 +34,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/admin/students").hasAnyAuthority("TEACHER", "ADMIN")
                         .requestMatchers("/admin/teachers").hasAnyAuthority("TEACHER", "ADMIN")
-                        .requestMatchers("/admin/*").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/admin/*/*").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/driving_card").hasAnyAuthority("TEACHER", "ADMIN")
+                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
