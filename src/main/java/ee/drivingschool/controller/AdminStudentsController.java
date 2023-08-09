@@ -10,7 +10,6 @@ import ee.drivingschool.service.StudentService;
 import ee.drivingschool.service.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,8 +41,9 @@ public class AdminStudentsController {
         } else {
             studentList = studentService.getAllStudentsDto();
         }
+        modelMap.addAttribute("pageNo", 1);
         modelMap.addAttribute("studentsList", studentList);
-        return "admin-students/1";
+        return "admin-students";
     }
 
     // ---------------------- CREATE NEW STUDENT ----------------------
@@ -55,6 +55,7 @@ public class AdminStudentsController {
         modelMap.addAttribute("statuses", Status.values());
         return "create-student";
     }
+
     @PostMapping("admin/student/create")
     public String createStudent(@Valid @ModelAttribute("studentDto") StudentCreationRequestDto studentCreationRequestDto,
                                 BindingResult result, ModelMap modelMap) {
@@ -66,12 +67,12 @@ public class AdminStudentsController {
         }
         Student student = studentService.createNewStudent(studentCreationRequestDto);
         drivingCardService.createNewDrivingCard(student);
-        return "redirect:/admin/students";
+        return "redirect:/admin/students/1";
     }
 
     // ---------------------- EDIT STUDENT ----------------------
     @GetMapping("/admin/student/{id}")
-    public String showEditStudentForm(@PathVariable("id") Long id,  ModelMap modelMap) throws StudentNotFoundException {
+    public String showEditStudentForm(@PathVariable("id") Long id, ModelMap modelMap) throws StudentNotFoundException {
         StudentEditDto studentEditDto = studentService.getStudentDtoById(id);
         List<CourseDto> courses = courseService.getAllCoursesDto();
         modelMap.addAttribute("student", studentEditDto);
@@ -79,6 +80,7 @@ public class AdminStudentsController {
         modelMap.addAttribute("statuses", Status.values());
         return "edit-student";
     }
+
     @PostMapping("/admin/student/{id}")
     public String editStudent(@PathVariable("id") Long id,
                               @ModelAttribute("student")
@@ -96,8 +98,7 @@ public class AdminStudentsController {
 
     @GetMapping("admin/students/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, ModelMap modelMap) {
-        int pageSize = 1;
-
+        int pageSize = 5;
         Page<StudentDto> page = studentService.findPaginated(pageNo, pageSize);
         List<StudentDto> listStudents = page.getContent();
 

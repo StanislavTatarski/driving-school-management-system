@@ -32,9 +32,9 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/admin/students").hasAnyAuthority("TEACHER", "ADMIN")
-                        .requestMatchers("/admin/teachers").hasAnyAuthority("TEACHER", "ADMIN")
-                        .requestMatchers("/driving_card").hasAnyAuthority("TEACHER", "ADMIN")
+                        .requestMatchers("/admin/students/**").hasAnyAuthority("TEACHER", "ADMIN")
+                        .requestMatchers("/admin/teachers/**").hasAnyAuthority("TEACHER", "ADMIN")
+                        .requestMatchers("/driving_card/**").hasAnyAuthority("TEACHER", "ADMIN")
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )

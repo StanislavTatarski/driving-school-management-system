@@ -6,6 +6,8 @@ import ee.drivingschool.model.Status;
 import ee.drivingschool.service.CourseService;
 import ee.drivingschool.service.TeacherService;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,14 @@ public class AdminCourseController {
     }
 
     @GetMapping("/")
-    public String getAllCourses() {
+    public String getAllCourses(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            for (GrantedAuthority authority : authentication.getAuthorities()) {
+                if ("STUDENT".equals(authority.getAuthority())) {
+                    return "redirect:/lessons";
+                }
+            }
+        }
         return "redirect:/page/1";
     }
 
@@ -60,8 +69,15 @@ public class AdminCourseController {
     }
 
     @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, ModelMap modelMap) {
-        int pageSize = 9;
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, ModelMap modelMap, Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            for (GrantedAuthority authority : authentication.getAuthorities()) {
+                if ("STUDENT".equals(authority.getAuthority())) {
+                    return "redirect:/lessons";
+                }
+            }
+        }
+        int pageSize = 5;
 
         Page<CourseDto> page = courseService.findPaginated(pageNo, pageSize);
         List<CourseDto> listCourses = page.getContent();
