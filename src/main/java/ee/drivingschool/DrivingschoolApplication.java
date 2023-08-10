@@ -1,6 +1,5 @@
 package ee.drivingschool;
 
-import ee.drivingschool.model.DrivingCard;
 import ee.drivingschool.repository.*;
 import ee.drivingschool.service.DrivingCardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class DrivingschoolApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 
-		DrivingCard drivingCard = drivingCardService.getDrivingCardById(2L);
+//		DrivingCard drivingCard = drivingCardService.getDrivingCardById(2L);
 
 
 //		DrivingLesson drivingLesson1 = new DrivingLesson (drivingCard, "S2", LocalDate.now(), 45, DrivingLessonStatus.PASSED);
@@ -54,10 +53,10 @@ public class DrivingschoolApplication implements CommandLineRunner {
 //		drivingLessonRepository.save(drivingLesson1);
 //		drivingLessonRepository.save(drivingLesson2);
 
-//		User User1 = new User (1L, "user1@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
-//		User User2 = new User (2L, "user2@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
-//		User admin1 = new User(3L, "admin1@gmail.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
-//
+//		User User1 = new User (1L, "student@example.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", false);
+//		User User2 = new User (2L, "teacher@example.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", false);
+//		User admin1 = new User(3L, "admin@example.com","$2a$12$87QIQUw8bH5nTBhCRvt0qOzXfKHhzUPObp1ZDsBmBpA/i5KOrybW2", true);
+
 //		userRepository.save(User1);
 //		userRepository.save(User2);
 //		userRepository.save(admin1);

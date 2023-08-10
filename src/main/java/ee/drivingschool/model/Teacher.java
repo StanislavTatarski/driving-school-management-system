@@ -39,8 +39,6 @@ public class Teacher {
         this.email = email;
     }
 
-    public Teacher() {
-    }
 
     public Teacher(Long id, String firstName, String lastName, String phone, String address, String email) {
         this.id = id;
