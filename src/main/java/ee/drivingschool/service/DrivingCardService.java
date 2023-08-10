@@ -20,14 +20,17 @@ public class DrivingCardService {
         List<DrivingCardDto> drivingCards = new ArrayList<>();
 
         for (DrivingCard drivingCard : drivingCardRepository.findAll()) {
-            drivingCards.add(toDrivingCard(drivingCard));
+            drivingCards.add(toDrivingCardDto(drivingCard));
         }
         return drivingCards;
     }
 
-    private DrivingCardDto toDrivingCard(DrivingCard drivingCard) {
+    public DrivingCardDto toDrivingCardDto(DrivingCard drivingCard) {
         DrivingCardDto drivingCardDto = new DrivingCardDto();
         drivingCardDto.setId(drivingCard.getId());
+        drivingCardDto.setStudentName(drivingCard.getStudent().getFullName());
+        drivingCardDto.setTeacherName(drivingCard.getTeacher().getFullName());
+        drivingCardDto.setCourseName(drivingCard.getCourse().getCourseName());
         return drivingCardDto;
     }
 
@@ -60,7 +63,7 @@ public class DrivingCardService {
         return drivingCardRepository.save(drivingCard);
     }
 
-    public DrivingCard findDrivingCardById(Long id) throws DrivingCardNotFoundException {
+    public DrivingCard getDrivingCardById(Long id) throws DrivingCardNotFoundException {
         return drivingCardRepository.findById(id).orElseThrow(()
                 -> new DrivingCardNotFoundException("Driving Card not found", Errors.DRIVING_CARD_NOT_FOUND));
     }
